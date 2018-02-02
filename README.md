@@ -1,17 +1,8 @@
+The project on base Symfony Standard Edition. 
+==============================================
+
 What's inside?
 --------------
-
-The Symfony Standard Edition is configured with the following defaults:
-
-  * An AppBundle you can use to start coding;
-
-  * Twig as the only configured template engine;
-
-  * Doctrine ORM/DBAL;
-
-  * Swiftmailer;
-
-  * Annotations enabled for everything.
 
 It comes with the following bundles:
 
@@ -27,7 +18,7 @@ It comes with the following bundles:
  
 It comes standard pre-configured with the following bundles:
   
-  * **FrameworkBundle** - The core Symfony framework bundle
+  * [**FrameworkBundle**][20] - The core Symfony framework bundle
 
   * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
     template and routing annotation capability
@@ -75,3 +66,4 @@ It comes standard pre-configured with the following bundles:
 [17]: https://symfony.com/doc/2.x/bundles/NelmioApiDocBundle/index.html
 [18]: https://github.com/liip/LiipFunctionalTestBundle
 [19]: https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
+[20]: https://symfony.com/doc/current/setup.html
