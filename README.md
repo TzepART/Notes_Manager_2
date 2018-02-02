@@ -1,16 +1,3 @@
-Symfony Standard Edition
-========================
-
-**WARNING**: This distribution does not support Symfony 4. See the
-[Installing & Setting up the Symfony Framework][15] page to find a replacement
-that fits you best.
-
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
-
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
-
 What's inside?
 --------------
 
@@ -26,8 +13,20 @@ The Symfony Standard Edition is configured with the following defaults:
 
   * Annotations enabled for everything.
 
-It comes pre-configured with the following bundles:
+It comes with the following bundles:
 
+  * [**FOSUserBundle**][15] - Standard Security bundle
+  
+  * [**DoctrineMigrationsBundle**][16] - Bundle for create and using Migrations
+  
+  * [**NelmioApiDocBundle**][17] - Bundle for auto-generate api
+    
+  * [**LiipFunctionalTestBundle**][18] (in dev env) - For testing  
+  
+  * [**DoctrineFixturesBundle**][19] (in dev env) - For using fixtures in testing
+ 
+It comes standard pre-configured with the following bundles:
+  
   * **FrameworkBundle** - The core Symfony framework bundle
 
   * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
@@ -60,10 +59,6 @@ It comes pre-configured with the following bundles:
   * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
     integration
 
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
 
 [1]:  https://symfony.com/doc/3.4/setup.html
 [6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
@@ -74,4 +69,9 @@ Enjoy!
 [11]: https://symfony.com/doc/3.4/logging.html
 [13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
 [14]: https://symfony.com/doc/current/setup/built_in_web_server.html
-[15]: https://symfony.com/doc/current/setup.html
+
+[15]: https://symfony.com/doc/master/bundles/FOSUserBundle/index.html
+[16]: https://symfony.com/doc/master/bundles/DoctrineMigrationsBundle/index.html
+[17]: https://symfony.com/doc/2.x/bundles/NelmioApiDocBundle/index.html
+[18]: https://github.com/liip/LiipFunctionalTestBundle
+[19]: https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
