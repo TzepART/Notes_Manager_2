@@ -14,7 +14,9 @@ It comes with the following bundles:
     
   * [**LiipFunctionalTestBundle**][18] (in dev env) - For testing  
   
-  * [**DoctrineFixturesBundle**][19] (in dev env) - For using fixtures in testing
+  * [**DoctrineFixturesBundle**][19] (in dev env) - For using fixtures in testing  
+  
+  * [**DoctrineBehaviorsBundle**][21] add behaviors to Doctrine2 entities and repositories
  
 It comes standard pre-configured with the following bundles:
   
@@ -67,3 +69,4 @@ It comes standard pre-configured with the following bundles:
 [18]: https://github.com/liip/LiipFunctionalTestBundle
 [19]: https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
 [20]: https://symfony.com/doc/current/setup.html
+[21]: https://github.com/KnpLabs/DoctrineBehaviors
