@@ -50,7 +50,7 @@ class LoadNotesData extends Fixture implements OrderedFixtureInterface, Containe
 
         for ($i = 0; $i < self::COUNT_NOTES; $i++) {
             $note = new Note();
-            $userNumber = $i%7;
+            $userNumber = $i%5;
 
             $note->setTitle($this->faker->word)
                 ->setText($this->faker->text(200))

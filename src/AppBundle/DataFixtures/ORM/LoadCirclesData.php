@@ -53,6 +53,7 @@ class LoadCirclesData extends Fixture implements OrderedFixtureInterface, Contai
             $user = $this->getReference(LoadUsersData::REFERENCE_PREFIX . $circleData["userNumber"]);
 
             $circle->setName($name)
+                ->setCountLayer(rand(2,6))
                 ->setUser($user);
 
             $manager->persist($circle);

@@ -14,7 +14,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class LoadSectorsData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-    const REFERENCE_PREFIX = 'app_sector_';
+    const REFERENCE_PREFIX = '_app_sector_';
 
     /**
      * @var ContainerInterface
@@ -55,6 +55,7 @@ class LoadSectorsData extends Fixture implements OrderedFixtureInterface, Contai
                 $sector = new Sector();
 
                 $sector->setCategory($this->getReference(LoadCategoriesData::REFERENCE_PREFIX.$circleName.$i))
+                    ->setCircle($this->getReference(LoadCirclesData::REFERENCE_PREFIX.$circleName))
                     ->setBeginAngle($beginAngle)
                     ->setEndAngle($endAngle)
                     ->setColor($this->faker->hexColor)
@@ -63,7 +64,7 @@ class LoadSectorsData extends Fixture implements OrderedFixtureInterface, Contai
                 $manager->persist($sector);
 
                 if ($this->referenceRepository) {
-                    $this->addReference(self::REFERENCE_PREFIX . $i, $sector);
+                    $this->addReference($circleName.self::REFERENCE_PREFIX . $i, $sector);
                 }
                 $manager->flush();
 

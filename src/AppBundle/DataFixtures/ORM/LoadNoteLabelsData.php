@@ -45,9 +45,6 @@ class LoadNoteLabelsData extends Fixture implements OrderedFixtureInterface, Con
     {
         $this->container = $container;
         $this->faker = FakerFactory::create();
-        for($i=0;$i < LoadNotesData::COUNT_NOTES; $i++) {
-            $this->notes[] = $this->getReference(LoadNotesData::REFERENCE_PREFIX.$i);
-        }
     }
 
     /**
@@ -57,7 +54,9 @@ class LoadNoteLabelsData extends Fixture implements OrderedFixtureInterface, Con
      */
     public function load(ObjectManager $manager)
     {
-        $circlesData = LoadCirclesData::getCirclesDate();
+        for($i=0;$i < LoadNotesData::COUNT_NOTES; $i++) {
+            $this->notes[] = $this->getReference(LoadNotesData::REFERENCE_PREFIX.$i);
+        }
 
         for($i = 0; $i < self::COUNT_NOTE_LABELS; $i++){
             $noteLabel = new NoteLabel();
@@ -69,6 +68,7 @@ class LoadNoteLabelsData extends Fixture implements OrderedFixtureInterface, Con
             $randCircle = $circles->get(array_rand($circles->toArray()));
 
             $sectors = $randCircle->getSectors();
+
             /** @var Sector $randSector */
             $randSector = $sectors->get(array_rand($sectors->toArray()));
 
@@ -86,6 +86,7 @@ class LoadNoteLabelsData extends Fixture implements OrderedFixtureInterface, Con
                 $this->addReference(self::REFERENCE_PREFIX . $i, $noteLabel);
             }
             $manager->flush();
+
         }
     }
 
