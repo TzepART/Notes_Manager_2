@@ -2,6 +2,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Sector;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -53,8 +54,10 @@ class LoadSectorsData extends Fixture implements OrderedFixtureInterface, Contai
             $endAngle = $diffAngle;
             for($i = 0; $i < $circlesDatum["countSectors"]; $i++){
                 $sector = new Sector();
+                /** @var Category $category */
+                $category = $this->getReference(LoadCategoriesData::REFERENCE_PREFIX.$circleName.$i);
 
-                $sector->setCategory($this->getReference(LoadCategoriesData::REFERENCE_PREFIX.$circleName.$i))
+                $sector->setCategory($category)
                     ->setCircle($this->getReference(LoadCirclesData::REFERENCE_PREFIX.$circleName))
                     ->setBeginAngle($beginAngle)
                     ->setEndAngle($endAngle)
@@ -62,10 +65,14 @@ class LoadSectorsData extends Fixture implements OrderedFixtureInterface, Contai
                 ;
 
                 $manager->persist($sector);
+                $manager->flush();
 
                 if ($this->referenceRepository) {
                     $this->addReference($circleName.self::REFERENCE_PREFIX . $i, $sector);
                 }
+
+                $category->setSector($sector);
+                $manager->persist($category);
                 $manager->flush();
 
                 $beginAngle += $diffAngle;

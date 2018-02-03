@@ -80,13 +80,17 @@ class LoadNoteLabelsData extends Fixture implements OrderedFixtureInterface, Con
                 ->setRadius($radius)
                 ->setAngle($angle);
 
+            $note->setNoteLabel($noteLabel)
+                ->setCategory($randSector->getCategory());
+
             $manager->persist($noteLabel);
+            $manager->persist($note);
 
             if ($this->referenceRepository) {
                 $this->addReference(self::REFERENCE_PREFIX . $i, $noteLabel);
             }
-            $manager->flush();
 
+            $manager->flush();
         }
     }
 

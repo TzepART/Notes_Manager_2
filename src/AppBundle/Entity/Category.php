@@ -31,13 +31,14 @@ class Category
 
     /**
      * @var Note[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Note", mappedBy="category", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Note", mappedBy="category")
      */
     protected $notes;
 
     /**
      * @var Sector
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Sector", inversedBy="category", cascade={"persist","remove"}, orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Sector", inversedBy="category", orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $sector;
 
@@ -135,7 +136,7 @@ class Category
      * @param Sector $sector
      * @return $this
      */
-    public function setSector($sector)
+    public function setSector(Sector $sector)
     {
         $this->sector = $sector;
         return $this;
