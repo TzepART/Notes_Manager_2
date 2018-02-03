@@ -42,9 +42,8 @@ class NoteLabel
     private $sector;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="note", type="int")
+     * @var Note
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Note", mappedBy="noteLabel")
      */
     private $note;
 
@@ -125,29 +124,23 @@ class NoteLabel
         return $this;
     }
 
-
     /**
-     * Set note
-     *
-     * @param int $note
-     *
-     * @return NoteLabel
-     */
-    public function setNote($note)
-    {
-        $this->note = $note;
-
-        return $this;
-    }
-
-    /**
-     * Get note
-     *
-     * @return int
+     * @return Note
      */
     public function getNote()
     {
         return $this->note;
     }
+
+    /**
+     * @param Note $note
+     * @return $this
+     */
+    public function setNote(Note $note)
+    {
+        $this->note = $note;
+        return $this;
+    }
+
 }
 

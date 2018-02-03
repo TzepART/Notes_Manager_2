@@ -22,10 +22,10 @@ class Sector
      */
     private $id;
 
+
     /**
-     * @var int
-     *
-     * @ORM\Column(name="category", type="int")
+     * @var Category
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Category", inversedBy="sector", cascade={"persist","remove"}, orphanRemoval=true)
      */
     private $category;
 
@@ -49,6 +49,7 @@ class Sector
      */
     protected $noteLabels;
 
+
     /**
      * Sector constructor.
      */
@@ -69,28 +70,23 @@ class Sector
     }
 
     /**
-     * Set category
-     *
-     * @param int $category
-     *
-     * @return Sector
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return int
+     * @return Category
      */
     public function getCategory()
     {
         return $this->category;
     }
+
+    /**
+     * @param Category $category
+     * @return $this
+     */
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+        return $this;
+    }
+
 
     /**
      * Set name

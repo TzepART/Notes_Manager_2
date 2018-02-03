@@ -51,6 +51,13 @@ class Note
      */
     private $category;
 
+    /**
+     * @var NoteLabel
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\NoteLabel", inversedBy="note", cascade={"persist","remove"}, orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private $noteLabel;
+
 
     /**
      * Get id
@@ -145,6 +152,26 @@ class Note
         $this->category = $category;
         return $this;
     }
+
+    /**
+     * @return NoteLabel
+     */
+    public function getNoteLabel()
+    {
+        return $this->noteLabel;
+    }
+
+    /**
+     * @param NoteLabel $noteLabel
+     * @return $this
+     */
+    public function setNoteLabel(NoteLabel $noteLabel)
+    {
+        $this->noteLabel = $noteLabel;
+        return $this;
+    }
+
+
 
 }
 

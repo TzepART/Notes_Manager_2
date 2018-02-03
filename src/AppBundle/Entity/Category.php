@@ -37,13 +37,18 @@ class Category
     protected $notes;
 
     /**
+     * @var Sector
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Sector", inversedBy="category", cascade={"persist","remove"}, orphanRemoval=true)
+     */
+    private $sector;
+
+    /**
      * Category constructor.
      */
     public function __construct()
     {
         $this->notes = new ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -116,6 +121,24 @@ class Category
     public function setNotes($notes)
     {
         $this->notes = $notes;
+        return $this;
+    }
+
+    /**
+     * @return Sector
+     */
+    public function getSector()
+    {
+        return $this->sector;
+    }
+
+    /**
+     * @param Sector $sector
+     * @return $this
+     */
+    public function setSector($sector)
+    {
+        $this->sector = $sector;
         return $this;
     }
 
