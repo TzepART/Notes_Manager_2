@@ -37,6 +37,13 @@ class Sector
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string")
+     */
+    private $color;
+
+    /**
      * @var Circle
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Circle", inversedBy="sectors")
      */
@@ -216,6 +223,24 @@ class Sector
     public function setEndAngle($endAngle)
     {
         $this->endAngle = $endAngle;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     * @return $this
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
         return $this;
     }
 }
