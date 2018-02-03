@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +28,21 @@ class Category
      * @ORM\Column(name="name", type="string")
      */
     private $name;
+
+
+    /**
+     * @var Note[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Note", mappedBy="category", cascade={"persist"})
+     */
+    protected $notes;
+
+    /**
+     * Category constructor.
+     */
+    public function __construct()
+    {
+        $this->notes = new ArrayCollection();
+    }
 
 
     /**
@@ -61,6 +77,46 @@ class Category
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add note
+     * @param Note $note
+     * @return $this
+     */
+    public function addNote(Note $note)
+    {
+        $this->notes[] = $note;
+        return $this;
+    }
+
+    /**
+     * Remove note
+     * @param Note $note
+     */
+    public function removeNote(Note $note)
+    {
+        $this->notes->removeElement($note);
+    }
+
+    /**
+     * Get notes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * @param Note[] $notes
+     * @return $this
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+        return $this;
     }
 
 }

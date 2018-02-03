@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,11 +37,25 @@ class Sector
     private $name;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="circle", type="int")
+     * @var Circle
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Circle", inversedBy="sectors")
      */
     private $circle;
+
+
+    /**
+     * @var NoteLabel[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\NoteLabel", mappedBy="user", cascade={"persist"}, orphanRemoval=true)
+     */
+    protected $noteLabels;
+
+    /**
+     * Sector constructor.
+     */
+    public function __construct()
+    {
+        $this->noteLabels = new ArrayCollection();
+    }
 
 
     /**
@@ -102,27 +117,62 @@ class Sector
     }
 
     /**
-     * Set circle
-     *
-     * @param int $circle
-     *
-     * @return Category
-     */
-    public function setCircle($circle)
-    {
-        $this->circle = $circle;
-
-        return $this;
-    }
-
-    /**
-     * Get circle
-     *
-     * @return int
+     * @return Circle
      */
     public function getCircle()
     {
         return $this->circle;
+    }
+
+    /**
+     * @param Circle $circle
+     * @return $this
+     */
+    public function setCircle(Circle $circle)
+    {
+        $this->circle = $circle;
+        return $this;
+    }
+
+
+    /**
+     * Add noteLabel
+     * @param NoteLabel $noteLabel
+     * @return $this
+     */
+    public function addNoteLabel(NoteLabel $noteLabel)
+    {
+        $this->noteLabels[] = $noteLabel;
+        return $this;
+    }
+
+    /**
+     * Remove noteLabel
+     * @param NoteLabel $noteLabel
+     */
+    public function removeNoteLabel(NoteLabel $noteLabel)
+    {
+        $this->noteLabels->removeElement($noteLabel);
+    }
+
+    /**
+     * Get noteLabels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNoteLabels()
+    {
+        return $this->noteLabels;
+    }
+
+    /**
+     * @param NoteLabel[] $noteLabels
+     * @return $this
+     */
+    public function setNoteLabels($noteLabels)
+    {
+        $this->noteLabels = $noteLabels;
+        return $this;
     }
 }
 

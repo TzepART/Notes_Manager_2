@@ -36,11 +36,10 @@ class NoteLabel
     private $radius;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="circle", type="int")
+     * @var Sector
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sector", inversedBy="noteLabels")
      */
-    private $circle;
+    private $sector;
 
     /**
      * @var int
@@ -109,28 +108,23 @@ class NoteLabel
     }
 
     /**
-     * Set circle
-     *
-     * @param int $circle
-     *
-     * @return NoteLabel
+     * @return Sector
      */
-    public function setCircle($circle)
+    public function getSector()
     {
-        $this->circle = $circle;
-
-        return $this;
+        return $this->sector;
     }
 
     /**
-     * Get circle
-     *
-     * @return int
+     * @param Sector $sector
+     * @return $this
      */
-    public function getCircle()
+    public function setSector(Sector $sector)
     {
-        return $this->circle;
+        $this->sector = $sector;
+        return $this;
     }
+
 
     /**
      * Set note
