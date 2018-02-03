@@ -29,12 +29,6 @@ class Sector
      */
     private $category;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string")
-     */
-    private $name;
 
     /**
      * @var string
@@ -104,31 +98,6 @@ class Sector
     {
         $this->category = $category;
         return $this;
-    }
-
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Sector
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
