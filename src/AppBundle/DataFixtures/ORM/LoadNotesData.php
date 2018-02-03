@@ -15,6 +15,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 class LoadNotesData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     const REFERENCE_PREFIX = 'app_note_';
+    const COUNT_NOTES = 160;
 
 
     /**
@@ -47,7 +48,7 @@ class LoadNotesData extends Fixture implements OrderedFixtureInterface, Containe
     public function load(ObjectManager $manager)
     {
 
-        for ($i = 0; $i < 80; $i++) {
+        for ($i = 0; $i < self::COUNT_NOTES; $i++) {
             $note = new Note();
             $userNumber = $i%7;
 
