@@ -29,7 +29,6 @@ class Category
      */
     private $name;
 
-
     /**
      * @var Note[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Note", mappedBy="category", cascade={"persist"})

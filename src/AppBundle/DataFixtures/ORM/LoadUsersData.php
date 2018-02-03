@@ -45,24 +45,6 @@ class LoadUsersData extends Fixture implements OrderedFixtureInterface, Containe
             'password' => 'qwe123',
             'roles' => [],
         ],
-        [
-            'email' => 'user06@mail.com',
-            'username' => 'user0com6mal',
-            'password' => 'qwe123',
-            'roles' => [],
-        ],
-        [
-            'email' => 'user07@mail.com',
-            'username' => 'user0com7mal',
-            'password' => 'qwe123',
-            'roles' => [],
-        ],
-        [
-            'email' => 'user08@mail.com',
-            'username' => 'user0com8mal',
-            'password' => 'qwe123',
-            'roles' => [],
-        ],
     ];
 
 

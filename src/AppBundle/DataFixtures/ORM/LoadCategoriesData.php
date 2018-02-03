@@ -2,7 +2,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Note;
+use AppBundle\Entity\Category;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -12,10 +12,9 @@ use Faker\Generator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
 
-class LoadNotesData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadCategoriesData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-    const REFERENCE_PREFIX = 'app_note_';
-
+    const REFERENCE_PREFIX = 'app_category_';
 
     /**
      * @var ContainerInterface
@@ -27,7 +26,7 @@ class LoadNotesData extends Fixture implements OrderedFixtureInterface, Containe
      */
     private $faker;
 
-
+    
     /**
      * Sets the container.
      *
@@ -46,19 +45,17 @@ class LoadNotesData extends Fixture implements OrderedFixtureInterface, Containe
      */
     public function load(ObjectManager $manager)
     {
+        $countCategories=LoadCirclesData::getCountSecors();
 
-        for ($i = 0; $i < 80; $i++) {
-            $note = new Note();
-            $userNumber = $i%7;
+        for ($i = 0; $i < $countCategories; $i++) {
+            $category = new Category();
 
-            $note->setTitle($this->faker->word)
-                ->setText($this->faker->text(200))
-                ->setUser($this->getReference(LoadUsersData::REFERENCE_PREFIX . $userNumber));
+            $category->setName($this->faker->word);
 
-            $manager->persist($note);
+            $manager->persist($category);
 
             if ($this->referenceRepository) {
-                $this->addReference(self::REFERENCE_PREFIX . $i, $note);
+                $this->addReference(self::REFERENCE_PREFIX . $i, $category);
             }
 
             $manager->flush();
