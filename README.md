@@ -16,7 +16,9 @@ It comes with the following bundles:
   
   * [**DoctrineFixturesBundle**][19] (in dev env) - For using fixtures in testing  
   
-  * [**DoctrineBehaviorsBundle**][21] add behaviors to Doctrine2 entities and repositories
+  * [**DoctrineBehaviorsBundle**][21] add behaviors to Doctrine2 entities and repositories  
+  
+  * [**Faker**][22] library for generate fiction data
  
 It comes standard pre-configured with the following bundles:
   
@@ -70,3 +72,4 @@ It comes standard pre-configured with the following bundles:
 [19]: https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
 [20]: https://symfony.com/doc/current/setup.html
 [21]: https://github.com/KnpLabs/DoctrineBehaviors
+[22]: https://github.com/fzaninotto/Faker
