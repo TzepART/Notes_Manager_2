@@ -39,7 +39,7 @@ class Circle
     /**
      * @var int
      *
-     * @ORM\Column(name="count_layer", type="int")
+     * @ORM\Column(name="count_layer", type="integer")
      */
     private $countLayer;
 
