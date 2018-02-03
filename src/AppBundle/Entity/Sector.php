@@ -49,6 +49,18 @@ class Sector
      */
     protected $noteLabels;
 
+    /**
+     * @var float
+     * @ORM\Column(name="beginAngle", type="float")
+     */
+    private $beginAngle;
+
+    /**
+     * @var float
+     * @ORM\Column(name="endAngle", type="float")
+     */
+    private $endAngle;
+
 
     /**
      * Sector constructor.
@@ -168,6 +180,42 @@ class Sector
     public function setNoteLabels($noteLabels)
     {
         $this->noteLabels = $noteLabels;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getBeginAngle()
+    {
+        return $this->beginAngle;
+    }
+
+    /**
+     * @param float $beginAngle
+     * @return $this
+     */
+    public function setBeginAngle($beginAngle)
+    {
+        $this->beginAngle = $beginAngle;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getEndAngle()
+    {
+        return $this->endAngle;
+    }
+
+    /**
+     * @param float $endAngle
+     * @return $this
+     */
+    public function setEndAngle($endAngle)
+    {
+        $this->endAngle = $endAngle;
         return $this;
     }
 }
