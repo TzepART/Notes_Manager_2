@@ -2,7 +2,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Category;
+use AppBundle\Entity\Sector;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -12,9 +12,9 @@ use Faker\Generator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
 
-class LoadCategoriesData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadSectorsData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-    const REFERENCE_PREFIX = 'app_category_';
+    const REFERENCE_PREFIX = 'app_sector_';
 
     /**
      * @var ContainerInterface
@@ -48,21 +48,29 @@ class LoadCategoriesData extends Fixture implements OrderedFixtureInterface, Con
         $circlesData = LoadCirclesData::getCirclesDate();
 
         foreach ($circlesData as $circleName => $circlesDatum) {
-            for($i = 0; $i<$circlesDatum["countSectors"]; $i++){
-                $category = new Category();
+            $diffAngle = 360/$circlesDatum["countSectors"];
+            $beginAngle = 0;
+            $endAngle = $diffAngle;
+            for($i = 0; $i < $circlesDatum["countSectors"]; $i++){
+                $sector = new Sector();
 
-                $category->setName($this->faker->word);
+                $sector->setCategory($this->getReference(LoadCategoriesData::REFERENCE_PREFIX.$circleName.$i))
+                    ->setBeginAngle($beginAngle)
+                    ->setEndAngle($endAngle)
+                    ->setColor($this->faker->hexColor)
+                ;
 
-                $manager->persist($category);
+                $manager->persist($sector);
 
                 if ($this->referenceRepository) {
-                    $this->addReference(self::REFERENCE_PREFIX.$circleName.$i, $category);
+                    $this->addReference(self::REFERENCE_PREFIX . $i, $sector);
                 }
-
                 $manager->flush();
+
+                $beginAngle += $diffAngle;
+                $endAngle += $diffAngle;
             }
         }
-
     }
 
     /**
@@ -72,6 +80,6 @@ class LoadCategoriesData extends Fixture implements OrderedFixtureInterface, Con
      */
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 }
