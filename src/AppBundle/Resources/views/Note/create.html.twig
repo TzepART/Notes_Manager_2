@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div>
+        <button type="submit" class="feedback__send js-feedback-send">Save</button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+

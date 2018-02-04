@@ -2,7 +2,9 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Note;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,7 +18,26 @@ class NoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('')
+            ->add('title', null, [
+                    'attr' => [
+                        'placeholder'=> "Имя"
+                    ],
+                    'required' => true,
+                    'label' => 'Название',
+                ]
+            )
+            ->add('text', null, [
+                    'attr' => [
+                        'placeholder'=> "Количество уровней"
+                    ],
+                    'required' => true,
+                    'label' => 'Количество уровней',
+                ]
+            )
+            ->add('category',EntityType::class,[
+                'data_class' => Category::class
+            ])
+            ->add('countLayer')
         ;
     }
     
