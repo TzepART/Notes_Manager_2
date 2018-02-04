@@ -24,7 +24,7 @@ class PagesControllerTest extends WebTestCase
 
         $client->request('GET', $url);
 
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
     /**
