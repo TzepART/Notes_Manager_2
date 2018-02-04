@@ -160,8 +160,7 @@ class CategoryController extends Controller
      *   },
      *  parameters={
      *      {"name"="name", "dataType"="string", "required"=true, "description"="Name of category"},
-     *      {"name"="user_id", "dataType"="integer", "required"=true, "description"="User"},
-     *      {"name"="countLayers", "dataType"="integer", "required"=true, "description"="count of Layers"}
+     *      {"name"="sector_id", "dataType"="integer", "required"=true, "description"="Sector"}
      *  },
      *  section="Category",
      * )
@@ -176,16 +175,14 @@ class CategoryController extends Controller
 
         if (
             !empty($name = $request->get('name'))
-            && !empty($user_id = $request->get('user_id'))
-            && !empty($countLayers = $request->get('countLayers'))
+            && !empty($sector_id = $request->get('sector_id'))
 
         ) {
-            $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
-            if($user instanceof User){
+            $sector = $this->getDoctrine()->getRepository(Sector::class)->find($sector_id);
+            if($sector instanceof Sector){
                 $category = new Category();
                 $category->setName($name)
-                    ->setUser($user)
-                    ->setCountLayer($countLayers);
+                         ->setSector($sector);
 
                 $this->get('doctrine.orm.entity_manager')->persist($category);
                 $this->get('doctrine.orm.entity_manager')->flush();
@@ -198,73 +195,6 @@ class CategoryController extends Controller
 
         return $response;
     }
-
-
-    /**
-     * Full update category
-     * @Route("/api/update/{id}/", name="notes_manager.category.api.full_update")
-     * @Method("PUT")
-     * @ApiDoc(
-     *  description="Method for full update category",
-     *  https=true,
-     *  headers={
-     *     {
-     *        "name"="X-Requested-With",
-     *        "description"="X-Requested-With",
-     *        "default"="XMLHttpRequest"
-     *     }
-     *   },
-     *  parameters={
-     *      {"name"="name", "dataType"="string", "required"=true, "description"="Name of category"},
-     *      {"name"="user_id", "dataType"="integer", "required"=true, "description"="User"},
-     *      {"name"="countLayers", "dataType"="integer", "required"=true, "description"="count of Layers"}
-     *  },
-     *  section="Category",
-     * )
-     *
-     * @param Request $request
-     * @param Category $category
-     * @return JsonResponse
-     */
-    public function fullUpdateApiAction(Request $request, Category $category)
-    {
-        $result = [];
-        $status = JsonResponse::HTTP_BAD_REQUEST;
-
-        if (
-            !empty($name = $request->get('name'))
-            || !empty($user_id = $request->get('user_id'))
-            || !empty($countLayers = $request->get('countLayers'))
-
-        ) {
-            if($user_id > 0){
-                $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
-                if($user instanceof User){
-                    $category->setUser($user);
-                }else{
-                    $category->setUser(null);
-                }
-            }
-
-            if($countLayers > 0){
-                $category->setCountLayer($countLayers);
-            }else{
-                $category->setCountLayer(null);
-            }
-
-            $category->setName($name);
-
-            $this->get('doctrine.orm.entity_manager')->persist($category);
-            $this->get('doctrine.orm.entity_manager')->flush();
-
-            $status = JsonResponse::HTTP_OK;
-        }
-
-        $response = new JsonResponse($result, $status);
-
-        return $response;
-    }
-
 
     /**
      * @param Category $category
