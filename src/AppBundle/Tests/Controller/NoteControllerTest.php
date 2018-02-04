@@ -24,7 +24,7 @@ class NoteControllerTest extends WebTestCase
 
         $client->request('GET', $url);
 
-        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     /**

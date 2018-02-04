@@ -34,3 +34,5 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/circle/, role: ROLE_USER }
+        - { path: ^/category/, role: ROLE_USER }
+        - { path: ^/note/, role: ROLE_USER }
