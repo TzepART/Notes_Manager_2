@@ -30,6 +30,13 @@ class Category
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string")
+     */
+    private $color;
+
+    /**
      * @var Note[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Note", mappedBy="category")
      */
@@ -138,6 +145,25 @@ class Category
     public function setSector(Sector $sector)
     {
         $this->sector = $sector;
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     * @return $this
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
         return $this;
     }
 

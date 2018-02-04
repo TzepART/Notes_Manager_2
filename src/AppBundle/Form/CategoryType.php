@@ -19,10 +19,18 @@ class CategoryType extends AbstractType
         $builder
             ->add('name', null, [
                     'attr' => [
-                        'placeholder'=> "Имя"
+                        'placeholder'=> "Название"
                     ],
                     'required' => true,
                     'label' => 'Название',
+                ]
+            )
+            ->add('color', null, [
+                    'attr' => [
+                        'placeholder'=> "Цвет"
+                    ],
+                    'required' => true,
+                    'label' => 'Цвет',
                 ]
             )
         ;
