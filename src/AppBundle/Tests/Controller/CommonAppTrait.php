@@ -54,7 +54,7 @@ trait CommonAppTrait
 
         $form = $crawler->filter('#login_form')->form();
 
-        $form['_username'] = 'user08@mail.com';
+        $form['_username'] = 'user0com1mal';
         $form['_password'] = 'qwe123';
 
         $this->client->submit($form);

@@ -6,10 +6,10 @@ use AppBundle\Tests\CommonTestsClass;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
- * Class PagesControllerTest
+ * Class CircleControllerTest
  * @package AppBundle\Tests\Controller
  */
-class PagesControllerTest extends WebTestCase
+class CircleControllerTest extends WebTestCase
 {
     use CommonAppTrait;
 
@@ -24,7 +24,7 @@ class PagesControllerTest extends WebTestCase
 
         $client->request('GET', $url);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     /**
@@ -45,7 +45,7 @@ class PagesControllerTest extends WebTestCase
     public function getUrlsForChecking()
     {
         $urls = [
-            ['/'],
+            ['/circle/'],
         ];
 
         return $urls;
