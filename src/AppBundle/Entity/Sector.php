@@ -25,8 +25,7 @@ class Sector
 
     /**
      * @var Category
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Category", inversedBy="sector", orphanRemoval=true)
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Category", inversedBy="sector")
      */
     private $category;
 

@@ -53,7 +53,7 @@ class Note
 
     /**
      * @var NoteLabel
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\NoteLabel", inversedBy="note", cascade={"persist","remove"}, orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\NoteLabel", mappedBy="note", cascade={"persist","remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $noteLabel;

@@ -37,8 +37,7 @@ class Category
 
     /**
      * @var Sector
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Sector", inversedBy="category", orphanRemoval=true)
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Sector", mappedBy="category")
      */
     private $sector;
 
