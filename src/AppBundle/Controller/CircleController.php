@@ -11,6 +11,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * CircleController
@@ -18,6 +19,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class CircleController extends Controller
 {
+    /**
+     * list of circles
+     * @Route("/", name="notes_manager.circle.list")
+     * @Method("GET")
+     * @return array
+     * @Template()
+     */
+    public function listAction()
+    {
+        $user = $this->getUser();
+
+        if($user instanceof User){
+            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user'=>$user]);
+        }else{
+            throw new AccessDeniedHttpException();
+        }
+
+        return ['circles' => $circles];
+    }
+
+
     /**
      * Create circle
      * @Route("/create/", name="notes_manager.circle.api.create")
