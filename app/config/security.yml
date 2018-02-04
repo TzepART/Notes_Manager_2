@@ -13,17 +13,25 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
-        main:
-            pattern: ^/
-            form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-
-            logout:       true
-            anonymous:    true
+          main:
+              pattern:             ^/
+              context:             user
+              form_login:
+                  provider:       fos_userbundle
+                  login_path:     /login
+                  use_forward:    false
+                  check_path:     /login_check
+                  default_target_path: /
+                  failure_path:   null
+                  csrf_token_generator: security.csrf.token_manager
+              logout:
+                  path:   /logout
+                  target: /
+              anonymous:          true
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/*, role: ROLE_USER }
