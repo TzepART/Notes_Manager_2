@@ -193,6 +193,72 @@ class CircleController extends Controller
 
 
     /**
+     * Full update circle
+     * @Route("/api/update/{id}/", name="notes_manager.circle.api.full_update")
+     * @Method("PUT")
+     * @ApiDoc(
+     *  description="Method for full update circle",
+     *  https=true,
+     *  headers={
+     *     {
+     *        "name"="X-Requested-With",
+     *        "description"="X-Requested-With",
+     *        "default"="XMLHttpRequest"
+     *     }
+     *   },
+     *  parameters={
+     *      {"name"="name", "dataType"="string", "required"=true, "description"="Name of circle"},
+     *      {"name"="user_id", "dataType"="integer", "required"=true, "description"="User"},
+     *      {"name"="countLayers", "dataType"="integer", "required"=true, "description"="count of Layers"}
+     *  },
+     *  section="Circle",
+     * )
+     *
+     * @param Request $request
+     * @param Circle $circle
+     * @return JsonResponse
+     */
+    public function fullUpdateApiAction(Request $request, Circle $circle)
+    {
+        $result = [];
+        $status = JsonResponse::HTTP_BAD_REQUEST;
+
+        if (
+            !empty($name = $request->get('name'))
+            || !empty($user_id = $request->get('user_id'))
+            || !empty($countLayers = $request->get('countLayers'))
+
+        ) {
+            if($user_id > 0){
+                $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
+                if($user instanceof User){
+                    $circle->setUser($user);
+                }else{
+                    $circle->setUser(null);
+                }
+            }
+
+            if($countLayers > 0){
+                $circle->setCountLayer($countLayers);
+            }else{
+                $circle->setCountLayer(null);
+            }
+
+            $circle->setName($name);
+
+            $this->get('doctrine.orm.entity_manager')->persist($circle);
+            $this->get('doctrine.orm.entity_manager')->flush();
+
+            $status = JsonResponse::HTTP_OK;
+        }
+
+        $response = new JsonResponse($result, $status);
+
+        return $response;
+    }
+
+
+    /**
      * @param Circle $circle
      * @return \Symfony\Component\Form\Form
      */
