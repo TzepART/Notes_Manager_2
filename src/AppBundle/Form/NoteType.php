@@ -20,24 +20,23 @@ class NoteType extends AbstractType
         $builder
             ->add('title', null, [
                     'attr' => [
-                        'placeholder'=> "Имя"
+                        'placeholder'=> "Заголовок"
                     ],
                     'required' => true,
-                    'label' => 'Название',
+                    'label' => 'Заголовок',
                 ]
             )
             ->add('text', null, [
                     'attr' => [
-                        'placeholder'=> "Количество уровней"
+                        'placeholder'=> "Текст"
                     ],
                     'required' => true,
-                    'label' => 'Количество уровней',
+                    'label' => 'Текст',
                 ]
             )
             ->add('category',EntityType::class,[
-                'data_class' => Category::class
+                'class' => Category::class
             ])
-            ->add('countLayer')
         ;
     }
     

@@ -3,7 +3,7 @@
  {% block main %}
      <ul>
          {% for note in notes %}
-             <li><a href="{{ path('notes_manager.note.view', {id: note.id}) }}">{{ note.name }}</a></li>
+             <li><a href="{{ path('notes_manager.note.view', {id: note.id}) }}">{{ note.title }}</a></li>
          {% endfor %}
      </ul>
  {% endblock %}
