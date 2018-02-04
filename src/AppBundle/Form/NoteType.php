@@ -17,6 +17,7 @@ class NoteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //TODO добавить фильтрацию категорий
         $builder
             ->add('title', null, [
                     'attr' => [
