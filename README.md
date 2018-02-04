@@ -19,6 +19,8 @@ It comes with the following bundles:
   * [**DoctrineBehaviorsBundle**][21] add behaviors to Doctrine2 entities and repositories  
   
   * [**Faker**][22] library for generate fiction data
+  
+  * [**PhpUnit_Library**][22] phpunit - library for testing
  
 It comes standard pre-configured with the following bundles:
   
@@ -73,3 +75,4 @@ It comes standard pre-configured with the following bundles:
 [20]: https://symfony.com/doc/current/setup.html
 [21]: https://github.com/KnpLabs/DoctrineBehaviors
 [22]: https://github.com/fzaninotto/Faker
+[23]: https://packagist.org/packages/phpunit/phpunit
