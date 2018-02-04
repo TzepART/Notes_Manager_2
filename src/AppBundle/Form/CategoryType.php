@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Category;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -25,9 +26,10 @@ class CategoryType extends AbstractType
                     'label' => 'Название',
                 ]
             )
-            ->add('color', null, [
+            ->add('color', ColorType::class, [
                     'attr' => [
-                        'placeholder'=> "Цвет"
+                        'placeholder'=> "Цвет",
+                        'type' => 'color',
                     ],
                     'required' => true,
                     'label' => 'Цвет',
