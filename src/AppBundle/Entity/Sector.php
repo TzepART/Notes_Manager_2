@@ -26,6 +26,7 @@ class Sector
     /**
      * @var Category
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Category", inversedBy="sector")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $category;
 

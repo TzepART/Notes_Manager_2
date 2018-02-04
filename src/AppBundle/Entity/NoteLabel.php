@@ -43,7 +43,8 @@ class NoteLabel
 
     /**
      * @var Note
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Note", mappedBy="noteLabel")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Note", inversedBy="noteLabel")
+     * @ORM\JoinColumn(name="note_id", referencedColumnName="id",)
      */
     private $note;
 
