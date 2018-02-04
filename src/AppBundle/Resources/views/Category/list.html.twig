@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+ {% block main %}
+     <ul>
+         {% for category in categories %}
+             <li><a href="{{ path('notes_manager.category.view', {id: category.id}) }}">{{ category.name }}</a></li>
+         {% endfor %}
+     </ul>
+ {% endblock %}
