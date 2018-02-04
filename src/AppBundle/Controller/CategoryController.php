@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Circle;
+use AppBundle\Entity\Sector;
 use AppBundle\Entity\User;
 use AppBundle\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,7 +36,14 @@ class CategoryController extends Controller
         $user = $this->getUser();
 
         if($user instanceof User){
-            $categories = $this->getDoctrine()->getRepository(Category::class)->findBy(['user'=>$user]);
+            $categories = [];
+            $circles =  $this->getDoctrine()->getRepository(Circle::class)->findBy(['user'=>$user]);
+            foreach ($circles as $index => $circle) {
+                /** @var Sector $sector */
+                foreach ($circle->getSectors() as $sector) {
+                    $categories[] = $sector->getCategory();
+                }
+            }
         }else{
             throw new AccessDeniedHttpException();
         }
@@ -91,7 +100,6 @@ class CategoryController extends Controller
         if ($categoryForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            $category->setUser($this->getUser());
 
             $em->persist($category);
             $em->flush();
