@@ -36,7 +36,8 @@ class NoteType extends AbstractType
                 ]
             )
             ->add('category',EntityType::class,[
-                'class' => Category::class
+                'class' => Category::class,
+                'required' => false,
             ])
         ;
     }
