@@ -44,7 +44,7 @@ class CircleController extends Controller
 
     /**
      * View of circle
-     * @Route("/{id}/", name="notes_manager.circle.view")
+     * @Route("/view/{id}/", name="notes_manager.circle.view")
      * @Method("GET")
      * @param Circle $circle
      * @return array
@@ -58,17 +58,15 @@ class CircleController extends Controller
     }
 
     /**
-     * create of circles
+     * Create of circle
      * @Route("/create/", name="notes_manager.circle.create")
      * @Method("GET")
      * @return array
      * @Template()
      */
-    public function createAction(Request $request)
+    public function createAction()
     {
-        $circle = new Circle();
-        $circleForm = $this->getCircleForm($circle);
-
+        $circleForm = $this->getCircleForm();
         return [
             'form' => $circleForm->createView()
         ];
@@ -83,7 +81,39 @@ class CircleController extends Controller
      */
     public function addCircleAction(Request $request)
     {
-        $circle = new Circle();
+        $circleForm = $this->getCircleForm();
+
+        $circleForm->handleRequest($request);
+
+        /** @var Circle $circle */
+        $circle = $circleForm->getData();
+
+        if ($circleForm->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $circle->setUser($this->getUser());
+
+            $em->persist($circle);
+            $em->flush();
+
+            return $this->redirectToRoute('notes_manager.circle.view',['id' => $circle->getId()]);
+        }
+
+        return $this->render('@App/Circle/create.html.twig', [
+            'form' => $circleForm->createView()
+        ]);
+    }
+
+    /**
+     * create of circles
+     * @Route("/update/{id}/", name="notes_manager.circle.update")
+     * @Method("POST")
+     * @param Request $request
+     * @param Circle $circle
+     * @return RedirectResponse|Response
+     */
+    public function editCircleAction(Request $request, Circle $circle)
+    {
         $circleForm = $this->getCircleForm($circle);
 
         $circleForm->handleRequest($request);
@@ -100,7 +130,7 @@ class CircleController extends Controller
             return $this->redirectToRoute('notes_manager.circle.view',['id' => $circle->getId()]);
         }
 
-        return $this->render('@App/Circle/create.html.twig', [
+        return $this->render('@App/Circle/view.html.twig', [
             'form' => $circleForm->createView()
         ]);
     }
@@ -163,13 +193,20 @@ class CircleController extends Controller
 
 
     /**
-     * @param Circle $feedback
+     * @param Circle $circle
      * @return \Symfony\Component\Form\Form
      */
-    public function getCircleForm(Circle $feedback)
+    public function getCircleForm($circle = null)
     {
-        return $this->container->get('form.factory')->create(CircleType::class, $feedback, [
-            'action' => $this->container->get('router')->generate('notes_manager.circle.add'),
+        if($circle instanceof Circle){
+            $action = $this->container->get('router')->generate('notes_manager.circle.update',['id' => $circle->getId()]);
+        }else{
+            $circle = new Circle();
+            $action = $this->container->get('router')->generate('notes_manager.circle.add');
+        }
+
+        return $this->container->get('form.factory')->create(CircleType::class, $circle, [
+            'action' => $action,
             'method' => 'POST'
         ]);
     }
