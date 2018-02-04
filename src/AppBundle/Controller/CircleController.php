@@ -4,13 +4,16 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Circle;
 use AppBundle\Entity\User;
+use AppBundle\Form\CircleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -39,10 +42,73 @@ class CircleController extends Controller
         return ['circles' => $circles];
     }
 
+    /**
+     * View of circle
+     * @Route("/{id}/", name="notes_manager.circle.view")
+     * @Method("GET")
+     * @param Circle $circle
+     * @return array
+     * @Template()
+     */
+    public function viewAction(Circle $circle)
+    {
+        $circleForm = $this->getCircleForm($circle);
+
+        return ['form' => $circleForm->createView()];
+    }
+
+    /**
+     * create of circles
+     * @Route("/create/", name="notes_manager.circle.create")
+     * @Method("GET")
+     * @return array
+     * @Template()
+     */
+    public function createAction(Request $request)
+    {
+        $circle = new Circle();
+        $circleForm = $this->getCircleForm($circle);
+
+        return [
+            'form' => $circleForm->createView()
+        ];
+    }
+
+    /**
+     * create of circles
+     * @Route("/create/", name="notes_manager.circle.add")
+     * @Method("POST")
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function addCircleAction(Request $request)
+    {
+        $circle = new Circle();
+        $circleForm = $this->getCircleForm($circle);
+
+        $circleForm->handleRequest($request);
+
+        $circle = $circleForm->getData();
+
+        if ($circleForm->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($circle);
+            $em->flush();
+
+            return $this->redirectToRoute('notes_manager.circle.view',['id' => $circle->getId()]);
+        }
+
+        return $this->render('@App/Circle/create.html.twig', [
+            'form' => $circleForm->createView()
+        ]);
+    }
+
 
     /**
      * Create circle
-     * @Route("/create/", name="notes_manager.circle.api.create")
+     * @Route("/api/create/", name="notes_manager.circle.api.create")
      * @Method("GET")
      * @ApiDoc(
      *  description="Method for create circle",
@@ -65,7 +131,7 @@ class CircleController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function createAction(Request $request)
+    public function createApiAction(Request $request)
     {
         $result = [];
         $status = JsonResponse::HTTP_BAD_REQUEST;
@@ -94,5 +160,19 @@ class CircleController extends Controller
 
         return $response;
     }
+
+
+    /**
+     * @param Circle $feedback
+     * @return \Symfony\Component\Form\Form
+     */
+    public function getCircleForm(Circle $feedback)
+    {
+        return $this->container->get('form.factory')->create(CircleType::class, $feedback, [
+            'action' => $this->container->get('router')->generate('notes_manager.circle.add'),
+            'method' => 'POST'
+        ]);
+    }
+
 
 }

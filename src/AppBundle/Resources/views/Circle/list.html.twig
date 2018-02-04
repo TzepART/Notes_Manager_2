@@ -3,7 +3,7 @@
  {% block main %}
      <ul>
          {% for circle in circles %}
-             <li><a href="#">{{ circle.name }}</a></li>
+             <li><a href="{{ path('notes_manager.circle.view', {id: circle.id}) }}">{{ circle.name }}</a></li>
          {% endfor %}
      </ul>
  {% endblock %}
