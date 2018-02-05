@@ -4,7 +4,9 @@
     {{ form_start(form) }}
     {{ form_errors(form) }}
     <ul class="tags" data-prototype="{{ form_widget(form.sectors.vars.prototype)|e('html_attr') }}">
-        {{ form_widget(form.sectors) }}
+        {% for sector in form.sectors %}
+            <li>{{ form_row(sector.color) }} {{ form_row(sector.name) }}</li>
+        {% endfor %}
     </ul>
     <div>
         <button type="submit" class="feedback__send js-feedback-send">Save</button>

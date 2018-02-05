@@ -147,7 +147,9 @@ class Circle
      */
     public function addSector(Sector $sector)
     {
-        $this->sectors[] = $sector;
+        if (!$this->sectors->contains($sector)) {
+            $this->sectors->add($sector);
+        }
         return $this;
     }
 

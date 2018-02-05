@@ -7,6 +7,7 @@ use AppBundle\Entity\Circle;
 use AppBundle\Entity\Sector;
 use AppBundle\Entity\User;
 use AppBundle\Form\CircleType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -141,15 +142,61 @@ class CircleController extends Controller
      */
     public function editCircleAction(Request $request, Circle $circle)
     {
-        $circleForm = $this->getCircleForm($circle);
+        $originalSectors = $this->getOriginalSectorsByCirrcle($circle);
 
+        $circleForm = $this->getCircleForm($circle);
         $circleForm->handleRequest($request);
 
         $circle = $circleForm->getData();
 
-        if ($circleForm->isValid()) {
 
+        if ($circleForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $countSectors = $circle->getSectors()->count();
+
+            /** @var Sector $sector */
+            foreach ($originalSectors as $sector) {
+                if (false === $circle->getSectors()->contains($sector)) {
+                    $category = $sector->getCategory();
+                    $em->remove($sector);
+                    $em->remove($category);
+                }
+            }
+
+            if($countSectors > 0) {
+
+                $diffAngle = 360 / $countSectors;
+                $beginAngle = 0;
+                $endAngle = $diffAngle;
+
+                /** @var Sector $sector */
+                foreach ($circle->getSectors() as $index => $sector) {
+                    //if sector don't exists create sector and category
+                    //if exist only update angles
+                    if(!$originalSectors->contains($sector)){
+                        $category = new Category();
+                        $category->setName($sector->getName());
+                        $em->persist($category);
+
+                        $sector->setCategory($category)
+                            ->setBeginAngle($beginAngle)
+                            ->setEndAngle($endAngle)
+                            ->setCircle($circle);
+                        $em->persist($sector);
+                    }else{
+                        $sector->setBeginAngle($beginAngle)
+                            ->setEndAngle($endAngle);
+                        $em->persist($sector);
+                    }
+
+
+                    $beginAngle += $diffAngle;
+                    $endAngle += $diffAngle;
+                }
+            }else{
+                //TODO actions if sectors aren't defined
+            }
+
 
             $em->persist($circle);
             $em->flush();
@@ -302,6 +349,24 @@ class CircleController extends Controller
             'action' => $action,
             'method' => 'POST'
         ]);
+    }
+
+    /**
+     * @param Circle $circle
+     * @return ArrayCollection
+     */
+    private function getOriginalSectorsByCirrcle(Circle $circle)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $arOriginalSectors = $em->getRepository(Sector::class)->findBy(['circle' => $circle]);
+        $originalSectors = new ArrayCollection();
+
+        // Create an ArrayCollection of the current Sector objects in the database
+        foreach ($arOriginalSectors as $originalSector) {
+            $originalSectors->add($originalSector);
+        }
+        return $originalSectors;
     }
 
 
