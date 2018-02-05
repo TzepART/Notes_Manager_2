@@ -21,7 +21,7 @@ class NoteLabelController extends Controller
 {
     /**
      * Create noteLabel
-     * @Route("/create/", name="notes_manager.note-label.create")
+     * @Route("/api/create/", name="notes_manager.note-label.api.create")
      * @Method("POST")
      * @ApiDoc(
      *  description="Method for create noteLabel",
