@@ -1,8 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends '@App/Circle/base_circle.html.twig' %}
 
-{% block main %}
+{% block form_block %}
     {{ form_start(form) }}
     {{ form_errors(form) }}
+    <ul class="tags" data-prototype="{{ form_widget(form.sectors.vars.prototype)|e('html_attr') }}">
+        {{ form_widget(form.sectors) }}
+    </ul>
     <div>
         <button type="submit" class="feedback__send js-feedback-send">Save</button>
     </div>

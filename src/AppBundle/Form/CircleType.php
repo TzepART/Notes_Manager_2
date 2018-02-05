@@ -37,6 +37,7 @@ class CircleType extends AbstractType
                 'entry_type' => SectorType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
+                'label' => 'Количество уровней',
             ])
         ;
     }
