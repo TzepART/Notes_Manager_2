@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Circle;
+use AppBundle\Entity\Sector;
 use AppBundle\Entity\User;
 use AppBundle\Form\CircleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -89,8 +91,33 @@ class CircleController extends Controller
         $circle = $circleForm->getData();
 
         if ($circleForm->isValid()) {
-
             $em = $this->getDoctrine()->getManager();
+            $countSectors = $circle->getSectors()->count();
+            if($countSectors > 0) {
+
+                $diffAngle = 360 / $countSectors;
+                $beginAngle = 0;
+                $endAngle = $diffAngle;
+
+                /** @var Sector $sector */
+                foreach ($circle->getSectors() as $index => $sector) {
+                    $category = new Category();
+                    $category->setName($sector->getName());
+                    $em->persist($category);
+
+                    $sector->setCategory($category)
+                        ->setBeginAngle($beginAngle)
+                        ->setEndAngle($endAngle)
+                        ->setCircle($circle);
+                    $em->persist($sector);
+
+                    $beginAngle += $diffAngle;
+                    $endAngle += $diffAngle;
+                }
+            }else{
+                //TODO actions if sectors aren't defined
+            }
+
             $circle->setUser($this->getUser());
 
             $em->persist($circle);

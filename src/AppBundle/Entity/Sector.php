@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
 
 /**
  * Sector
@@ -13,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Sector
 {
+    use Timestampable;
+
     /**
      * @var int
      *
@@ -224,7 +227,11 @@ class Sector
      */
     public function getName()
     {
-        return $this->name;
+        if($this->category instanceof Category){
+            return $this->category->getName();
+        }else{
+            return $this->name;
+        }
     }
 
     /**
