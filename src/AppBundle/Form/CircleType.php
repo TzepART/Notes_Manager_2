@@ -33,7 +33,11 @@ class CircleType extends AbstractType
                     'label' => 'Количество уровней',
                 ]
             )
-            ->add('countLayer')
+            ->add('sectors', CollectionType::class,[
+                'entry_type' => SectorType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ])
         ;
     }
     

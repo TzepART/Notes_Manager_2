@@ -63,6 +63,11 @@ class Sector
      */
     private $endAngle;
 
+    /**
+     * @var string
+     */
+    private $name;
+
 
     /**
      * Sector constructor.
@@ -213,5 +218,25 @@ class Sector
         $this->color = $color;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+
 }
 
