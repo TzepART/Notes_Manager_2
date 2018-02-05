@@ -61,6 +61,7 @@ class LoadSectorsData extends Fixture implements OrderedFixtureInterface, Contai
                     ->setCircle($this->getReference(LoadCirclesData::REFERENCE_PREFIX.$circleName))
                     ->setBeginAngle($beginAngle)
                     ->setEndAngle($endAngle)
+                    ->setColor($this->faker->hexColor)
                 ;
 
                 $manager->persist($sector);

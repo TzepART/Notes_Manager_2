@@ -51,8 +51,7 @@ class LoadCategoriesData extends Fixture implements OrderedFixtureInterface, Con
             for($i = 0; $i<$circlesDatum["countSectors"]; $i++){
                 $category = new Category();
 
-                $category->setName($this->faker->word)
-                    ->setColor($this->faker->hexColor);
+                $category->setName($this->faker->word);
 
                 $manager->persist($category);
 
