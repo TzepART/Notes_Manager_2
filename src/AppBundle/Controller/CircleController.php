@@ -349,7 +349,10 @@ class CircleController extends Controller
 
         return $this->container->get('form.factory')->create(CircleType::class, $circle, [
             'action' => $action,
-            'method' => 'POST'
+            'method' => 'POST',
+            'attr' => [
+                'class' => 'jumbotron col-md-6 col-md-offset-3 create_circle_form'
+            ],
         ]);
     }
 
