@@ -54,6 +54,7 @@ gulp.task('serve:dist', ['default'], () =>
       //       will present a certificate warning in the browser.
       // https: true,
       server: 'dist',
+      browser: "google chrome",
       port: 3001,
       reloadDelay: 2000
     })
