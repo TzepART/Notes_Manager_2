@@ -37,12 +37,12 @@ class CategoryController extends Controller
 
         // TODO output circles
         if($user instanceof User){
-            $categories = $this->getDoctrine()->getRepository(Category::class)->getCategoriesGroupByCirclesByUser($user);
+            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user' => $user]);
         }else{
             throw new AccessDeniedHttpException();
         }
 
-        return ['categories' => $categories];
+        return ['circles' => $circles];
     }
 
     /**

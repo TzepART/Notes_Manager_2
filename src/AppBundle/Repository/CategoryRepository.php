@@ -16,7 +16,6 @@ class CategoryRepository extends EntityRepository
     public function getCategoriesGroupByCirclesByUser(User $user)
     {
         $qb = $this->queryCategoriesByUser($user);
-        $qb->groupBy('circle');
 
         return $qb->getQuery()->getResult();
     }
