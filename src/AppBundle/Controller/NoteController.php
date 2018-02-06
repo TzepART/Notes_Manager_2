@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Note;
+use AppBundle\Entity\NoteLabel;
 use AppBundle\Entity\User;
 use AppBundle\Form\NoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -93,7 +95,19 @@ class NoteController extends Controller
         if ($noteForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            $note->setUser($this->getUser());
+
+            /** @var Category $category */
+            $category = $note->getCategory();
+
+            /** @var NoteLabel $noteLabel */
+            $noteLabel = $note->getNoteLabel();
+            if($category instanceof Category && $noteLabel instanceof NoteLabel){
+                $sector = $category->getSector();
+                $noteLabel->setNote($note)
+                    ->setSector($sector)
+                    ->setAngle(rand($sector->getBeginAngle(),$sector->getEndAngle()));
+                $em->persist($noteLabel);
+            }
 
             $em->persist($note);
             $em->flush();
