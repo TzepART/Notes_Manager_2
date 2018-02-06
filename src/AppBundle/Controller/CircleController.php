@@ -296,11 +296,13 @@ class CircleController extends Controller
     {
         $result = [];
         $status = JsonResponse::HTTP_BAD_REQUEST;
+        $user_id = (int) $request->get('user_id');
+        $countLayers = (int) $request->get('countLayers');
 
         if (
             !empty($name = $request->get('name'))
-            || !empty($user_id = $request->get('user_id'))
-            || !empty($countLayers = $request->get('countLayers'))
+            || $user_id > 0
+            || $countLayers > 0
 
         ) {
             if($user_id > 0){

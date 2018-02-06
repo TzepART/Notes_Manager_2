@@ -35,15 +35,9 @@ class CategoryController extends Controller
     {
         $user = $this->getUser();
 
+        // TODO output circles
         if($user instanceof User){
-            $categories = [];
-            $circles =  $this->getDoctrine()->getRepository(Circle::class)->findBy(['user'=>$user]);
-            foreach ($circles as $index => $circle) {
-                /** @var Sector $sector */
-                foreach ($circle->getSectors() as $sector) {
-                    $categories[] = $sector->getCategory();
-                }
-            }
+            $categories = $this->getDoctrine()->getRepository(Category::class)->getCategoriesGroupByCirclesByUser($user);
         }else{
             throw new AccessDeniedHttpException();
         }

@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Note;
+use AppBundle\Entity\NoteLabel;
 use AppBundle\Entity\User;
 use AppBundle\Form\NoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -68,6 +70,7 @@ class NoteController extends Controller
     public function createAction()
     {
         $noteForm = $this->getNoteForm();
+
         return [
             'form' => $noteForm->createView()
         ];
@@ -92,7 +95,20 @@ class NoteController extends Controller
         if ($noteForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            $note->setUser($this->getUser());
+
+            /** @var Category $category */
+            $category = $note->getCategory();
+
+            /** @var NoteLabel $noteLabel */
+            $noteLabel = $note->getNoteLabel();
+            if($category instanceof Category && $noteLabel instanceof NoteLabel){
+                $sector = $category->getSector();
+                $angle = $sector->getBeginAngle() + ($sector->getEndAngle()-$sector->getBeginAngle())/2;
+                $noteLabel->setNote($note)
+                    ->setSector($sector)
+                    ->setAngle($angle);
+                $em->persist($noteLabel);
+            }
 
             $em->persist($note);
             $em->flush();
@@ -124,6 +140,24 @@ class NoteController extends Controller
         if ($noteForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+
+            /** @var Category $category */
+            $category = $note->getCategory();
+
+            /** @var NoteLabel $noteLabel */
+            $noteLabel = $note->getNoteLabel();
+            if($category instanceof Category && $noteLabel instanceof NoteLabel){
+                $sector = $category->getSector();
+                if($sector->getId() != $noteLabel->getSector()->getId()){
+                    $angle = $sector->getBeginAngle() + ($sector->getEndAngle()-$sector->getBeginAngle())/2;
+                    $noteLabel->setNote($note)
+                        ->setSector($sector)
+                        ->setAngle($angle);
+                    $em->persist($noteLabel);
+                }
+            }else{
+                $em->remove($noteLabel);
+            }
 
             $em->persist($note);
             $em->flush();
@@ -354,6 +388,8 @@ class NoteController extends Controller
             $note = new Note();
             $action = $this->container->get('router')->generate('notes_manager.note.add');
         }
+
+        $note->setUser($this->getUser());
 
         return $this->container->get('form.factory')->create(NoteType::class, $note, [
             'action' => $action,

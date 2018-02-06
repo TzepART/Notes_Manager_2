@@ -144,6 +144,17 @@ class Category
         return $this;
     }
 
+    /**
+     * @return Circle
+     */
+    public function getCircle()
+    {
+        return $this->sector->getCircle();
+    }
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string) $this->name;

@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
  {% block main %}
+
      <ul>
+         <li><a href="{{ path('notes_manager.note.create') }}">add note</a></li>
+         <br>
          {% for note in notes %}
              <li><a href="{{ path('notes_manager.note.view', {id: note.id}) }}">{{ note.title }}</a></li>
          {% endfor %}

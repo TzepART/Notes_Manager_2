@@ -181,5 +181,10 @@ class Circle
         $this->sectors = $sectors;
         return $this;
     }
+
+    public function __toString()
+    {
+        return (string) $this->getName();
+    }
 }
 
