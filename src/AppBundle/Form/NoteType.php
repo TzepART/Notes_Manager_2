@@ -78,6 +78,14 @@ class NoteType extends AbstractType
                     return $repo->queryCategoriesGroupByCirclesByUser($this->getUser());
                 },
             ])
+            ->add('noteLabel', NoteLabelType::class, [
+                    'attr' => [
+                        'placeholder'=> "Важность"
+                    ],
+                    'required' => false,
+                    'label' => false,
+                ]
+            )
             ->add('save', SubmitType::class)
         ;
     }
