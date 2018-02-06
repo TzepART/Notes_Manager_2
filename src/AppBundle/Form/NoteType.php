@@ -75,7 +75,7 @@ class NoteType extends AbstractType
                 'required' => false,
                 'group_by' => 'circle',
                 'query_builder' => function(CategoryRepository $repo) {
-                    return $repo->queryCategoriesGroupByCirclesByUser($this->getUser());
+                    return $repo->queryCategoriesByUser($this->getUser());
                 },
             ])
             ->add('noteLabel', NoteLabelType::class, [

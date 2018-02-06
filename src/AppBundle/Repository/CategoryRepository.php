@@ -13,7 +13,15 @@ use \Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
-    public function queryCategoriesGroupByCirclesByUser(User $user)
+    public function getCategoriesGroupByCirclesByUser(User $user)
+    {
+        $qb = $this->queryCategoriesByUser($user);
+        $qb->groupBy('circle');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function queryCategoriesByUser(User $user)
     {
         $qb = $this->createQueryBuilder('category')
             ->join('category.sector','sector')
