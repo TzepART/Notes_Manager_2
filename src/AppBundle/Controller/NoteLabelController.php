@@ -109,6 +109,7 @@ class NoteLabelController extends Controller
     {
         $result = [];
         $update = false;
+        $em = $this->get('doctrine.orm.entity_manager');
 
         $angle = (int) $request->get('angle');
         $radius = (float) $request->get('radius');
@@ -125,14 +126,19 @@ class NoteLabelController extends Controller
         }
 
         if($sectorId > 0){
-            $sector = $this->getDoctrine()->getRepository(Sector::class)->find($sectorId);
-            $noteLabel->setSector($sector);
-            $update = true;
+            if($sectorId != $noteLabel->getSector()->getId()){
+                $sector = $this->getDoctrine()->getRepository(Sector::class)->find($sectorId);
+                $noteLabel->setSector($sector);
+                $note = $noteLabel->getNote();
+                $note->setCategory($sector->getCategory());
+                $em->persist($note);
+                $update = true;
+            }
         }
 
         if($update){
-            $this->get('doctrine.orm.entity_manager')->persist($noteLabel);
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $em->persist($noteLabel);
+            $em->flush();
             $status = JsonResponse::HTTP_OK;
         }else{
             $status = JsonResponse::HTTP_NO_CONTENT;
