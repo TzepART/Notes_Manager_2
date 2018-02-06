@@ -46,6 +46,26 @@ class NoteController extends Controller
     }
 
     /**
+     * List of incoming notes
+     * @Route("/incoming/", name="notes_manager.note.incoming_list")
+     * @Method("GET")
+     * @return array
+     * @Template()
+     */
+    public function listIncomingNotesAction()
+    {
+        $user = $this->getUser();
+
+        if($user instanceof User){
+            $notes = $this->getDoctrine()->getRepository(Note::class)->findBy(['user'=>$user, 'category' => null]);
+        }else{
+            throw new AccessDeniedHttpException();
+        }
+
+        return ['notes' => $notes];
+    }
+
+    /**
      * View of note
      * @Route("/view/{id}/", name="notes_manager.note.view")
      * @Method("GET")

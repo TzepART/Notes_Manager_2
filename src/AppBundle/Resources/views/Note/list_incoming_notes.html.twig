@@ -4,10 +4,10 @@
 
      <ul>
          <li><a href="{{ path('notes_manager.note.create') }}">add note</a></li>
-         <li><a href="{{ path('notes_manager.note.incoming_list') }}">incoming notes</a></li>
          <br>
          {% for note in notes %}
              <li><a href="{{ path('notes_manager.note.view', {id: note.id}) }}">{{ note.title }}</a></li>
          {% endfor %}
      </ul>
  {% endblock %}
+
