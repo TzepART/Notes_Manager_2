@@ -68,6 +68,7 @@ class NoteController extends Controller
     public function createAction()
     {
         $noteForm = $this->getNoteForm();
+
         return [
             'form' => $noteForm->createView()
         ];
