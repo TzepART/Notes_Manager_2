@@ -103,9 +103,10 @@ class NoteController extends Controller
             $noteLabel = $note->getNoteLabel();
             if($category instanceof Category && $noteLabel instanceof NoteLabel){
                 $sector = $category->getSector();
+                $angle = $sector->getBeginAngle() + ($sector->getEndAngle()-$sector->getBeginAngle())/2;
                 $noteLabel->setNote($note)
                     ->setSector($sector)
-                    ->setAngle(rand($sector->getBeginAngle(),$sector->getEndAngle()));
+                    ->setAngle($angle);
                 $em->persist($noteLabel);
             }
 
@@ -139,6 +140,24 @@ class NoteController extends Controller
         if ($noteForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+
+            /** @var Category $category */
+            $category = $note->getCategory();
+
+            /** @var NoteLabel $noteLabel */
+            $noteLabel = $note->getNoteLabel();
+            if($category instanceof Category && $noteLabel instanceof NoteLabel){
+                $sector = $category->getSector();
+                if($sector->getId() != $noteLabel->getSector()->getId()){
+                    $angle = $sector->getBeginAngle() + ($sector->getEndAngle()-$sector->getBeginAngle())/2;
+                    $noteLabel->setNote($note)
+                        ->setSector($sector)
+                        ->setAngle($angle);
+                    $em->persist($noteLabel);
+                }
+            }else{
+                $em->remove($noteLabel);
+            }
 
             $em->persist($note);
             $em->flush();
