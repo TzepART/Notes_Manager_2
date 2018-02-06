@@ -45,7 +45,7 @@ class NoteLabelController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function createAction(Request $request)
+    public function createApiAction(Request $request)
     {
         $result = [];
         $status = JsonResponse::HTTP_BAD_REQUEST;
@@ -71,6 +71,71 @@ class NoteLabelController extends Controller
                 $this->get('doctrine.orm.entity_manager')->flush();
                 $status = JsonResponse::HTTP_CREATED;
             }
+        }
+
+        $response = new JsonResponse($result, $status);
+
+        return $response;
+    }
+
+
+    /**
+     * Update noteLabel
+     * @Route("/api/update/{id}/", name="notes_manager.note-label.api.update")
+     * @Method("PATCH")
+     * @ApiDoc(
+     *  description="Method for update noteLabel",
+     *  https=true,
+     *  headers={
+     *     {
+     *        "name"="X-Requested-With",
+     *        "description"="X-Requested-With",
+     *        "default"="XMLHttpRequest"
+     *     }
+     *   },
+     *  parameters={
+     *      {"name"="angle", "dataType"="float", "required"=true, "description"="Angle of noteLabel"},
+     *      {"name"="radius", "dataType"="float", "required"=true, "description"="Radius of noteLabel"},
+     *      {"name"="sector", "dataType"="integer", "required"=true, "description"="Linking sector"}
+     *  },
+     *  section="NoteLabel",
+     * )
+     *
+     * @param Request $request
+     * @param NoteLabel $noteLabel
+     * @return JsonResponse
+     */
+    public function updateApiAction(Request $request, NoteLabel $noteLabel)
+    {
+        $result = [];
+        $update = false;
+
+        $angle = (int) $request->get('angle');
+        $radius = (float) $request->get('radius');
+        $sectorId = (int) $request->get('sector');
+
+        if($angle > 0){
+            $noteLabel->setAngle($angle);
+            $update = true;
+        }
+
+        if($radius > 0){
+            $noteLabel->setRadius($radius);
+            $update = true;
+        }
+
+        if($sectorId > 0){
+            $sector = $this->getDoctrine()->getRepository(Sector::class)->find($sectorId);
+            $noteLabel->setSector($sector);
+            $update = true;
+        }
+
+        if($update){
+            $this->get('doctrine.orm.entity_manager')->persist($noteLabel);
+            $this->get('doctrine.orm.entity_manager')->flush();
+            $status = JsonResponse::HTTP_OK;
+        }else{
+            $status = JsonResponse::HTTP_NO_CONTENT;
         }
 
         $response = new JsonResponse($result, $status);
