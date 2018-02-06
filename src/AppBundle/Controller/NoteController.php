@@ -355,6 +355,8 @@ class NoteController extends Controller
             $action = $this->container->get('router')->generate('notes_manager.note.add');
         }
 
+        $note->setUser($this->getUser());
+
         return $this->container->get('form.factory')->create(NoteType::class, $note, [
             'action' => $action,
             'method' => 'POST'
