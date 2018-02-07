@@ -11,8 +11,9 @@ jQuery(document).ready(function() {
   // Get the ul that holds the collection of tags
   var $collectionHolder = $('div.sectors');
 
-  // add the "add a tag" anchor and li to the tags ul
-  $collectionHolder.append($newLinkLi);
+  if (typeof $collectionHolder.html() !== 'undefined'){
+    // add the "add a tag" anchor and li to the tags ul
+    $collectionHolder.append($newLinkLi);
 
 // TODO add when logic for delete sector will be ready
 //         // add a delete link to all of the existing tag form li elements
@@ -20,18 +21,18 @@ jQuery(document).ready(function() {
 //           addTagFormDeleteLink($(this));
 //         });
 
-  // count the current form inputs we have (e.g. 2), use that as the new
-  // index when inserting a new item (e.g. 2)
-  $collectionHolder.data('index', $collectionHolder.find(':input').length);
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
-  $addTagLink.on('click', function(e) {
-    // prevent the link from creating a "#" on the URL
-    e.preventDefault();
+    $addTagLink.on('click', function(e) {
+      // prevent the link from creating a "#" on the URL
+      e.preventDefault();
 
-    // add a new tag form (see code block below)
-    addTagForm($collectionHolder, $newLinkLi);
-  });
-
+      // add a new tag form (see code block below)
+      addTagForm($collectionHolder, $newLinkLi);
+    });
+  }
 
 });
 

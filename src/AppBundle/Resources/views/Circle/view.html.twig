@@ -6,14 +6,52 @@
         <div class="col-md-6">
             <canvas id="canvas" width="600" height="600"></canvas>
             <div style="margin-top: 10px;">
-                <div class="detail_circle_group_buttons btn-group"><a class="btn btn-primary btn-lg"
-                                                                      id="create_label_link"
-                                                                      href="create_note.html?id=1">Добавить
-                        заметку</a><a class="btn btn-primary btn-lg" id="pop_label_link" href="" style="display: none;">Посмотреть
-                        заметку</a><a class="btn btn-primary btn-lg" href="list_notes.html?id=1">Список заметок</a><a
-                            class="btn btn-primary btn-lg" href="circles_edit.html?id=1">Редактировать окружность</a></div>
+                <div class="detail_circle_group_buttons btn-group">
+                    <a class="btn btn-primary btn-lg" id="create_label_link" href="{{ path('notes_manager.note.create') }}">Добавить заметку</a>
+                    <a class="btn btn-primary btn-lg" id="pop_label_link" href="" style="display: none;">Посмотреть заметку</a>
+                    <a class="btn btn-primary btn-lg" href="{{ path('notes_manager.note.list') }}">Список заметок</a>
+                    <a class="btn btn-primary btn-lg" href="{{ path('notes_manager.circle.edit', {id: circle.id}) }}">Редактировать окружность</a>
+                </div>
             </div>
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+      {# @var sector \AppBundle\Entity\Sector #}
+      {% for sector in circle.sectors %}
+          var dataSector = {
+            id: {{ sector.id }},
+            numLayers: {{ circle.countLayer }},
+            color: '{{ sector.color }}',
+            beginAngle: {{ sector.beginAngle }},
+            endAngle: {{ sector.endAngle }},
+            name: '{{ sector.category.name }}',
+            circle_id: {{ circle.id }},
+          };
+
+          createSectorNew(dataSector.id, dataSector.beginAngle, dataSector.endAngle, dataSector.circle_id, dataSector.numLayers, dataSector.color);
+      {% endfor %}
+
+      {# @var sector \AppBundle\Entity\Sector #}
+      {% set firstSector = null %}
+      {% for sector in circle.sectors %}
+            {% if loop.index == 1 %}
+                {% set firstSector = sector %}
+            {% endif %}
+
+            {% if circle.sectors[loop.index] is defined %}
+                {% set nextSector = circle.sectors[loop.index] %}
+            {% else %}
+                {% set nextSector = firstSector %}
+            {% endif %}
+
+            borderForSector({{ sector.endAngle }},{{ sector.id }},{{ nextSector.id }}, {{ sector.beginAngle }},{{ nextSector.endAngle }});
+      {% endfor %}
+
+    </script>
+{% endblock %}
+
 

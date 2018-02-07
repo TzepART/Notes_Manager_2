@@ -478,9 +478,10 @@ function updateLabelPositionByChangingSector(border,coefficientLeft,coefficientR
   var sector_right = $('canvas').getLayer('main_sector_'+border.sectorRightId);
   var labels = $('canvas').getLayerGroup('note_labels');
 
-  function updateLabelPosition(label, index, array) {
+  if(typeof labels !== 'undefined'){
+    function updateLabelPosition(label, index, array) {
 
-    if(label.label_angle > sector_left.start && label.label_angle < sector_left.end){
+      if(label.label_angle > sector_left.start && label.label_angle < sector_left.end){
         var newAngle = (label.label_angle-oldLeftSectorMinAngle)*coefficientLeft+newLeftSectorMinAngle;
         var LabelCoord = cartesian2Dec(label.label_radius*bigRadius, newAngle);
         label.x = LabelCoord.X;
@@ -493,9 +494,10 @@ function updateLabelPositionByChangingSector(border,coefficientLeft,coefficientR
         label.x = LabelCoord.X;
         label.y = LabelCoord.Y;
         label.label_angle = newAngle;
+      }
     }
+    labels.forEach(updateLabelPosition);
   }
-  labels.forEach(updateLabelPosition);
 
   // console.log(sector_left,sector_right);
 }
