@@ -413,7 +413,10 @@ class NoteController extends Controller
 
         return $this->container->get('form.factory')->create(NoteType::class, $note, [
             'action' => $action,
-            'method' => 'POST'
+            'method' => 'POST',
+            'attr' => [
+                'class' => 'jumbotron col-md-6 col-md-offset-3 create_note_form'
+            ],
         ]);
     }
 
