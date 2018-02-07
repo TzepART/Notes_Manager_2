@@ -1,23 +1,71 @@
 {% extends 'base.html.twig' %}
 
  {% block main %}
-     <ul>
-         {# @var circle \AppBundle\Entity\Circle #}
-         {% for circle in circles %}
-             <p>{{ circle.name }}</p>
-             <ul>
-                 {% for sector in circle.sectors %}
-                     {# @var category \AppBundle\Entity\Category #}
-                     {% set category = sector.category %}
-                     <li><a href="{{ path('notes_manager.category.view', {id: category.id}) }}">{{ category.name }}</a></li>
-                     <ul>
-                         {# @var note \AppBundle\Entity\Note #}
-                         {% for note in category.notes %}
-                             <li><a href="{{ path('notes_manager.note.view', {id: note.id}) }}">{{ note.title }}</a></li>
-                         {% endfor %}
-                     </ul>
+     <div class="row">
+         <div class="col-md-4">
+             <div class="panel panel-default">
+                 {% set selectNote = null %}
+                 {#@var circle \AppBundle\Entity\Circle#}
+                 {% for circle in circles %}
+                 <div class="panel-heading" id="heading{{ circle.id }}" role="tab">
+                     <h4 class="panel-title">
+                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ circle.id }}" aria-controls="collapse{{ circle.id }}" class="collapsed" aria-expanded="false">{{ circle.name }}</a>
+                     </h4>
+                 </div>
+                 <div class="panel-collapse collapse" id="collapse{{ circle.id }}" role="tabpanel" aria-labelledby="heading{{ circle.id }}">
+                     <div class="list-group">
+                         <ul class="list-group">
+                             {% for sector in circle.sectors %}
+                                 {# @var category \AppBundle\Entity\Category #}
+                                 {% set category = sector.category %}
+                                 <li class="list-group-item notes_link_by_list" style="background: gray;">
+                                     <a href="#collapseCategory{{ category.id }}" data-toggle="collapse" aria-expanded="false" aria-controls="collapseCategory{{ category.id }}">{{ category.name }}</a>
+                                     <a href="{{ path('notes_manager.circle.view', {id: circle.id}) }}"><i class="fa fa-adjust fa-lg"></i></a>
+
+                                     <div class="collapse collapse_note" id="collapseCategory{{ category.id }}">
+                                         <div class="well_notes">
+                                             <ul class="list-group">
+                                                 {# @var note \AppBundle\Entity\Note #}
+                                                 {% for note in category.notes %}
+                                                     {% if selectNote is null %}
+                                                         {% set selectNote = note %}
+                                                     {% endif %}
+                                                     <li class="list-group-item notes_link_by_list" style="background: lightseagreen;">
+                                                         <a href="#collapseNote{{ note.id }}" aria-expanded="false" onclick="getNoteContent({{ note.id }})" aria-controls="collapseNote{{ note.id }}">{{ note.title }}</a>
+                                                         <a href="{{ path('notes_manager.circle.view', {id: circle.id}) }}"><i class="fa fa-adjust fa-lg"></i></a>
+                                                         <a href="{{ path('notes_manager.note.view', {id: note.id}) }}"><i class="fa fa-pencil fa-lg"></i></a>
+                                                         <div class="collapse collapse_note" id="collapseNote{{ note.id }}"></div>
+                                                     </li>
+                                                 {% endfor %}
+                                             </ul>
+                                         </div>
+                                     </div>
+
+                                 </li>
+                             {% endfor %}
+                         </ul>
+                     </div>
+                 </div>
                  {% endfor %}
-             </ul>
-         {% endfor %}
-     </ul>
+             </div>
+         </div>
+         <div class="jumbotron col-md-8">
+             <div class="row">
+                 <div class="col-md-8">
+                     {# @var selectNote \AppBundle\Entity\Note#}
+                     {% if selectNote is not null %}
+                         <div class="note_view_title" id="note_view_title">{{ selectNote.title }}</div>
+                         <div class="note_view_text" id="note_view_text">{{ selectNote.text }}</div>
+                     {% endif %}
+                 </div>
+                 <div class="col-md-3 col-md-offset-1">
+                     <div class="form-group form_submit">
+                         {% if selectNote is not null %}
+                            <a id="note_edit_link" class="btn btn-primary register_button" href="{{ path('notes_manager.note.view',{id: selectNote.id}) }}">Редактировать</a>
+                         {% endif %}
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
  {% endblock %}

@@ -11,24 +11,24 @@ block content
                     .list-group
                         ul.list-group
                             li.list-group-item.notes_link_by_list(style="background: gray")
-                                a(href="#collapseCircle" data-toggle="collapse" aria-expanded="false" aria-controls="collapseCircle") Category1
+                                a(href="#collapseCategory1" data-toggle="collapse" aria-expanded="false" aria-controls="collapseCategory1") Category1
                                 a(href="detail_circle.html?id=1")
                                     i.fa.fa-adjust.fa-lg
                                 a(href="sector_edit.html?id=2")
                                     i.fa.fa-pencil.fa-lg
-                                .collapse.collapse_note#collapseCircle
+                                .collapse.collapse_note#collapseCategory1
                                     .well_notes
                                         ul.list-group
                                             li.list-group-item.notes_link_by_list(style="background: rgb(256, 0, 0)")
-                                                a(href="#collapseCategory" aria-expanded="false" onclick="getNoteContent(1)" aria-controls="collapseCategory") Note1
+                                                a(href="#collapseCategory1" aria-expanded="false" onclick="getNoteContent(1)" aria-controls="collapseCategory1") Note1
                                                 a(href="detail_circle.html?id=1")
                                                     i.fa.fa-adjust.fa-lg
                                                 a(href="notes_edit.html?id=1")
                                                     i.fa.fa-pencil.fa-lg
-                                                .collapse.collapse_note#collapseCategory
+                                                .collapse.collapse_note#collapseNote
                                             mixin li-note(color, name, id)
                                                 li.list-group-item.notes_link_by_list(style="background: " + color)
-                                                    a(href="#collapseCategory" onclick="getNoteContent("+id+")" aria-controls="collapseCategory")= name
+                                                    a(href="#collapseNote" onclick="getNoteContent("+id+")" aria-controls="collapseNote")= name
                                                     a(href="")
                                                         i.fa.fa-adjust.fa-lg
                                                     a(href="")
@@ -74,7 +74,7 @@ block content
                         | temporibus?
                 .col-md-3.col-md-offset-1
                     .form-group.form_submit
-                        a.btn.btn-primary.register_button(href="notes_edit.html") Редактировать
+                        a.btn.btn-primary#note_edit_link(href="notes_edit.html") Редактировать
 
 
 
