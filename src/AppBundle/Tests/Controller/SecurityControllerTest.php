@@ -14,7 +14,7 @@ use Faker\Generator;
  */
 class SecurityControllerTest extends WebTestCase
 {
-    const ERROR_PASSWORD = "fos_user.password.mismatch";
+    const ERROR_PASSWORD = "Неверный пароль";
     const ERROR_EXIST_LOGIN = "fos_user.username.already_used";
     const ERROR_EXIST_EMAIL = "fos_user.email.already_used";
     const ERROR_LOGIN = "Invalid credentials.";
