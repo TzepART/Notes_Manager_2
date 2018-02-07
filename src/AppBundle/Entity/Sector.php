@@ -50,7 +50,7 @@ class Sector
 
     /**
      * @var NoteLabel[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\NoteLabel", mappedBy="user", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\NoteLabel", mappedBy="sector", cascade={"persist"}, orphanRemoval=true)
      */
     protected $noteLabels;
 
