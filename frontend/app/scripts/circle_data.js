@@ -30,14 +30,6 @@ var dataSector3 = {
 };
 
 
-createSectorNew(dataSector1.id, dataSector1.beginAngle, dataSector1.endAngle, dataSector1.circle_id, dataSector1.numLayers, dataSector1.color)
-createSectorNew(dataSector2.id, dataSector2.beginAngle, dataSector2.endAngle, dataSector2.circle_id, dataSector2.numLayers, dataSector2.color)
-createSectorNew(dataSector3.id, dataSector3.beginAngle, dataSector3.endAngle, dataSector3.circle_id, dataSector3.numLayers, dataSector3.color)
-
-borderForSector(dataSector1.endAngle,dataSector1.id,dataSector2.id, dataSector1.beginAngle,dataSector2.endAngle);
-borderForSector(dataSector2.endAngle,dataSector2.id,dataSector3.id, dataSector2.beginAngle,dataSector3.endAngle);
-borderForSector(dataSector3.endAngle,dataSector3.id,dataSector1.id, dataSector3.beginAngle,dataSector1.endAngle);
-
 var dataLabel1 = {
   id: 1,
   radius: 0.43,
@@ -74,14 +66,21 @@ var dataLabel5 = {
 };
 
 
-createLabel(dataLabel1);
-createLabel(dataLabel2);
-createLabel(dataLabel3);
-createLabel(dataLabel4);
-createLabel(dataLabel5);
-
-
 $(document).ready(function () {
   // $('canvas').triggerLayerEvent('myLabel1', 'mouseover');
+  createSectorNew(dataSector1.id, dataSector1.beginAngle, dataSector1.endAngle, dataSector1.circle_id, dataSector1.numLayers, dataSector1.color)
+  createSectorNew(dataSector2.id, dataSector2.beginAngle, dataSector2.endAngle, dataSector2.circle_id, dataSector2.numLayers, dataSector2.color)
+  createSectorNew(dataSector3.id, dataSector3.beginAngle, dataSector3.endAngle, dataSector3.circle_id, dataSector3.numLayers, dataSector3.color)
+
+  borderForSector(dataSector1.endAngle,dataSector1.id,dataSector2.id, dataSector1.beginAngle,dataSector2.endAngle);
+  borderForSector(dataSector2.endAngle,dataSector2.id,dataSector3.id, dataSector2.beginAngle,dataSector3.endAngle);
+  borderForSector(dataSector3.endAngle,dataSector3.id,dataSector1.id, dataSector3.beginAngle,dataSector1.endAngle);
+
+  createLabel(dataLabel1);
+  createLabel(dataLabel2);
+  createLabel(dataLabel3);
+  createLabel(dataLabel4);
+  createLabel(dataLabel5);
+
   $('canvas').triggerLayerEvent('slice11', 'click');
 });

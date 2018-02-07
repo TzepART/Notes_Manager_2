@@ -45,7 +45,7 @@ class CategoryControllerTest extends WebTestCase
     public function getUrlsForChecking()
     {
         $urls = [
-            ['/category/'],
+            ['/note/'],
         ];
 
         return $urls;

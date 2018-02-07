@@ -16,10 +16,10 @@
 </head>
 <body>
 <div class="container">
-    <div class="masthead"><h3 class="text-muted">Notes Manager<span class="label label-default">Beta</span></h3>
+    <div class="masthead"><h3>Notes Manager  <span class="label label-default">Beta</span></h3>
         <ul class="nav nav-justified">
             <li role="presentation"><a href="{{ path('notes_manager.circle.list') }}">Список окружностей</a></li>
-            <li role="presentation"><a href="{{ path('notes_manager.note.incoming_list') }}">Входящие</a></li>
+            <li role="presentation"><a href="{{ path('notes_manager.note.list') }}">Заметки</a></li>
             <li role="presentation"><a href="{{ path('notes_manager.circle.create') }}">Добавить окружность</a></li>
             <li role="presentation"><a href="{{ path('notes_manager.note.create') }}">Добавить заметку</a></li>
             {% if is_granted('ROLE_USER') %}

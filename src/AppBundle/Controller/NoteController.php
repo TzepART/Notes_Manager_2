@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Circle;
 use AppBundle\Entity\Note;
 use AppBundle\Entity\NoteLabel;
 use AppBundle\Entity\User;
@@ -26,7 +27,7 @@ class NoteController extends Controller
 {
 
     /**
-     * List of notes
+     * list of notes
      * @Route("/", name="notes_manager.note.list")
      * @Method("GET")
      * @return array
@@ -37,12 +38,12 @@ class NoteController extends Controller
         $user = $this->getUser();
 
         if($user instanceof User){
-            $notes = $this->getDoctrine()->getRepository(Note::class)->findBy(['user'=>$user]);
+            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user' => $user]);
         }else{
             throw new AccessDeniedHttpException();
         }
 
-        return ['notes' => $notes];
+        return ['circles' => $circles];
     }
 
     /**
@@ -122,6 +123,7 @@ class NoteController extends Controller
             /** @var NoteLabel $noteLabel */
             $noteLabel = $note->getNoteLabel();
             if($category instanceof Category && $noteLabel instanceof NoteLabel){
+                // TODO not create label if category wasn't selected
                 $sector = $category->getSector();
                 $angle = $sector->getBeginAngle() + ($sector->getEndAngle()-$sector->getBeginAngle())/2;
                 $noteLabel->setNote($note)
