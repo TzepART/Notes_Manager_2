@@ -29,9 +29,10 @@ framework:
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
     fragments: ~
     http_method_override: true
-    assets: ~
     php_errors:
         log: true
+    assets:
+        version: %assets_version%
 
 # Twig Configuration
 twig:
@@ -75,6 +76,9 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
+    registration:
+            form:
+                type: AppBundle\Form\Security\RegistrationFormType
 
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"

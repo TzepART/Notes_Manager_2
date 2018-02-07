@@ -6,8 +6,12 @@ block content
         .col-md-6
             canvas#canvas(width="600" height="600")
             div(style="margin-top: 10px")
-                .detail_circle_group_buttons.btn-group
-                    a#create_label_link.btn.btn-primary.btn-lg(href="create_note.html?id=1") Добавить заметку
-                    a#pop_label_link.btn.btn-primary.btn-lg(href="" style="display: none") Посмотреть заметку
+                .detail_circle_group_buttons
                     a.btn.btn-primary.btn-lg(href="list_notes.html?id=1") Список заметок
                     a.btn.btn-primary.btn-lg(href="circles_edit.html?id=1") Редактировать окружность
+        .col-md-1
+        .col-md-2
+            .detail_circle_group_buttons
+                a#create_label_link.btn.btn-primary.btn-lg(href="create_note.html?id=1") Добавить заметку
+                a#pop_label_link.btn.btn-primary.btn-lg(href="" style="display: none") Посмотреть заметку
+

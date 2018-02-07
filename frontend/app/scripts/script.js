@@ -13,7 +13,7 @@ var shadowColor = "white";
  * */
 
 /**
- * Из декартовой в полярную систему координат.
+ * From dec in polar
  *
  * @param {float} x
  * @param {float} y
@@ -121,72 +121,6 @@ function changeColorLayers(color,numLayers) {
 /*
  * Block functions for sectors
  * */
-
-function createSector(data) {
-  var arColors = changeColorLayers(data.color,data.numLayers);
-  var i;
-  var difRadius = bigRadius/data.numLayers;
-  var radius = bigRadius;
-
-  $('canvas').drawArc({
-    layer: true,
-    name: 'mainArc'+data.id,
-    strokeStyle: '#000',
-    strokeWidth: 2,
-    x: CenterX, y: CenterY,
-    radius: bigRadius,
-    start: data.beginAngle, end: data.endAngle,
-  });
-
-  for(i=1;i<=data.numLayers;i++){
-    $('canvas').drawSlice({
-      layer: true,
-      name: 'slice'+data.id+i,
-      groups: ['chart', 'slices'],
-      fillStyle: arColors[i-1],
-      x: CenterX, y: CenterY,
-      start: data.beginAngle, end: data.endAngle,
-      radius: radius,
-      strokeStyle: '#f60',
-      strokeWidth: 3,
-      dblclick: function(layer) {
-        var polar = cartesian2Polar(layer.eventX, layer.eventY);
-        var link = $('#create_label_link').attr('href','/app_dev.php/notes/new/'+data.circle_id+'?radius='+polar.distance/bigRadius+'&degr='+polar.degr);
-        link.removeClass( "btn-primary" ).addClass( "btn-danger" );
-        link.text('Добавить заметку в выбрнный сектор');
-      },
-      click: function(layer) {
-        $('canvas').setLayer('mainArc'+data.id, {
-          shadowColor: shadowColor,
-          shadowBlur: 20
-        })
-            .drawLayers();
-      },
-      mouseout: function(layer) {
-        $('canvas').setLayer('mainArc'+data.id, {
-          shadowBlur: 0
-        })
-            .drawLayers();
-      }
-    });
-    radius = radius - difRadius;
-  }
-
-  $('canvas')
-      .drawText({
-        layer: true,
-        fillStyle: '#c33',
-        fontFamily: 'Trebuchet MS, sans-serif',
-        fontSize: 18,
-        text: data.name,
-        x: CenterX, y: CenterY,
-        radius: bigRadius+20,
-        rotate: (data.beginAngle<data.endAngle)?(data.beginAngle+data.endAngle)/2:(data.beginAngle+data.endAngle+360)/2,
-        dblclick: function(layer) {
-          $('#pop_sector').css('display','block').attr('id',555);
-        },
-      });
-}
 
 function createSectorNew(sector_id, beginAngle, endAngle, circle_id, numLayers, color) {
   var i;
@@ -319,9 +253,6 @@ function borderForSector(angle, sectorLeftId, sectorRightId, angleMin, angelMax)
       var endAngleR = sectorRight.end;
       var colorR = sectorRight.color;
 
-      // sectorLeft.end = pol.degr;
-      // sectorRight.start = pol.degr;
-
       var newLeftSectorMinAngle = sectorLeft.start;
       var newRightSectorMinAngle = pol.degr;
       var oldLeftSectorMinAngle = sectorLeft.start;
@@ -338,13 +269,6 @@ function borderForSector(angle, sectorLeftId, sectorRightId, angleMin, angelMax)
       createSectorNew(sectorRightId,pol.degr,endAngleR, circleId, numLayers, colorR);
 
       setHightMoveLayerToLayer();
-
-      // $('canvas').removeLayer('border_'+sectorLeftId+'_'+sectorRightId);
-      // borderForSector(pol.degr,sectorLeftId,sectorRightId);
-
-
-      // updateCoordinateLabel(layer.data.circleId,layer.data.id,pol.distance/bigRadius,pol.degr);
-      // delRayNamePopUpAndCircleByLabel(layer.data.id);
     },
     drag: function(layer) {
       var pol = cartesian2Polar(layer.x, layer.y);
@@ -544,9 +468,10 @@ function updateLabelPositionByChangingSector(border,coefficientLeft,coefficientR
   var sector_right = $('canvas').getLayer('main_sector_'+border.sectorRightId);
   var labels = $('canvas').getLayerGroup('note_labels');
 
-  function updateLabelPosition(label, index, array) {
+  if(typeof labels !== 'undefined'){
+    function updateLabelPosition(label, index, array) {
 
-    if(label.label_angle > sector_left.start && label.label_angle < sector_left.end){
+      if(label.label_angle > sector_left.start && label.label_angle < sector_left.end){
         var newAngle = (label.label_angle-oldLeftSectorMinAngle)*coefficientLeft+newLeftSectorMinAngle;
         var LabelCoord = cartesian2Dec(label.label_radius*bigRadius, newAngle);
         label.x = LabelCoord.X;
@@ -559,9 +484,10 @@ function updateLabelPositionByChangingSector(border,coefficientLeft,coefficientR
         label.x = LabelCoord.X;
         label.y = LabelCoord.Y;
         label.label_angle = newAngle;
+      }
     }
+    labels.forEach(updateLabelPosition);
   }
-  labels.forEach(updateLabelPosition);
 
   // console.log(sector_left,sector_right);
 }
@@ -582,7 +508,6 @@ function updateCoordinateLabel(circleId,labelId,radius,angle) {
       })
 }
 
-
 function delRayNamePopUpAndCircleByLabel(id) {
   $('canvas').removeLayer('circleByLabel'+id);
   $('canvas').removeLayer('lineByLabel'+id);
@@ -601,149 +526,3 @@ function delRayNamePopUpAndCircleAllLabels() {
   $('canvas').removeLayerGroup('nameLabelPopup');
   $('canvas').removeLayerGroup('nameLabelPopupText');
 }
-
-
-/*
-* block for creating sectors
-* */
-
-var countOfFields = 3; // Текущее число полей
-var curFieldNameId = 3; // Уникальное значение для атрибута name
-var maxFieldLimit = 12; // Максимальное число возможных полей
-function deleteField(a) {
-//if (countOfFields > 0) {
-  var arrInput = a.parentNode.getElementsByTagName('input');
-  var name = arrInput[0].value;
-
-//            BX.ajax.post(window.location.href, {delete_name : name} ,function(){});
-// Получаем доступ к ДИВу, содержащему поле
-  var contDiv = a.parentNode;
-// Удаляем этот ДИВ из DOM-дерева
-  contDiv.parentNode.removeChild(contDiv);
-// Уменьшаем значение текущего числа полей
-  countOfFields--;
-//}
-// Возвращаем false, чтобы не было перехода по сслыке
-  return false;
-}
-
-function addField() {
-// Проверяем, не достигло ли число полей максимума
-  if (countOfFields >= maxFieldLimit) {
-    alert("Число полей достигло своего максимума = " + maxFieldLimit);
-    return false;
-  }
-// Увеличиваем текущее значение числа полей
-  countOfFields++;
-// Увеличиваем ID
-  curFieldNameId++;
-// Создаем элемент ДИВ
-  var div = document.createElement("div");
-  div.setAttribute("class", "form-group create_sector");
-// Добавляем HTML-контент с пом. свойства innerHTML
-  div.innerHTML = "<input type=\"text\" placeholder=\"Название сектора\"  name=\"sector_name[" + curFieldNameId + "]\" class=\"form-control\" value=\"\" autocomplete=\"off\"/>" +
-      "<input type=\"color\" placeholder=\"Цвет сектора\"  name=\"sector_color[" + curFieldNameId + "]\" class=\"form-control\" value=\"#FFFAFA\" autocomplete=\"off\"/>" +
-      " <input type=\"button\" class=\"form-control\" onclick=\"return deleteField(this)\" href=\"#\" value=\"x\">";
-// Добавляем новый узел в конец списка полей
-  document.getElementById("formCircleCreate").appendChild(div);
-// Возвращаем false, чтобы не было перехода по сслыке
-  return false;
-}
-
-
-
-
-
-
-
-
-var numLayers = 4;
-
-var dataSector1 = {
-  id: 1,
-  numLayers: numLayers,
-  color: '#8FBC8F',
-  beginAngle: 10,
-  endAngle: 90,
-  name: 'Example1',
-  circle_id: 1,
-};
-
-var dataSector2 = {
-  id: 2,
-  numLayers: numLayers,
-  color: '#FFD700',
-  beginAngle: 90,
-  endAngle: 200,
-  name: 'Example2',
-  circle_id: 1,
-};
-var dataSector3 = {
-  id: 3,
-  numLayers: numLayers,
-  color: '#BA55D3',
-  beginAngle: 200,
-  endAngle: 10,
-  name: 'Example3',
-  circle_id: 1,
-};
-
-// createSectorNew(dataSector1);
-// createSectorNew(dataSector2);
-// createSectorNew(dataSector3);
-
-createSectorNew(dataSector1.id, dataSector1.beginAngle, dataSector1.endAngle, dataSector1.circle_id, dataSector1.numLayers, dataSector1.color)
-createSectorNew(dataSector2.id, dataSector2.beginAngle, dataSector2.endAngle, dataSector2.circle_id, dataSector2.numLayers, dataSector2.color)
-createSectorNew(dataSector3.id, dataSector3.beginAngle, dataSector3.endAngle, dataSector3.circle_id, dataSector3.numLayers, dataSector3.color)
-
-borderForSector(dataSector1.endAngle,dataSector1.id,dataSector2.id, dataSector1.beginAngle,dataSector2.endAngle);
-borderForSector(dataSector2.endAngle,dataSector2.id,dataSector3.id, dataSector2.beginAngle,dataSector3.endAngle);
-borderForSector(dataSector3.endAngle,dataSector3.id,dataSector1.id, dataSector3.beginAngle,dataSector1.endAngle);
-
-var dataLabel1 = {
-  id: 1,
-  radius: 0.43,
-  degr: 30,
-  name: 'Note1'
-};
-
-var dataLabel2 = {
-  id: 2,
-  radius: 0.71,
-  degr: 60,
-  name: 'Note2'
-};
-
-var dataLabel3 = {
-  id: 3,
-  radius: 0.41,
-  degr: 100,
-  name: 'Note3'
-};
-
-var dataLabel4 = {
-  id: 4,
-  radius: 0.81,
-  degr: 170,
-  name: 'Note4'
-};
-
-var dataLabel5 = {
-  id: 5,
-  radius: 0.91,
-  degr: 140,
-  name: 'Note5'
-};
-
-
-createLabel(dataLabel1);
-createLabel(dataLabel2);
-createLabel(dataLabel3);
-createLabel(dataLabel4);
-createLabel(dataLabel5);
-
-
-$(document).ready(function () {
-  // $('canvas').triggerLayerEvent('myLabel1', 'mouseover');
-  $('canvas').triggerLayerEvent('slice11', 'click');
-});

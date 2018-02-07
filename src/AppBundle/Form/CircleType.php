@@ -19,25 +19,32 @@ class CircleType extends AbstractType
         $builder
             ->add('name', null, [
                     'attr' => [
-                        'placeholder'=> "Имя"
+                        'placeholder'=> "Название окружности",
+                        'class' => 'form-control',
                     ],
                     'required' => true,
-                    'label' => 'Название',
+                    'label' => false
                 ]
             )
             ->add('countLayer', null, [
                     'attr' => [
-                        'placeholder'=> "Количество уровней"
+                        'placeholder'=> "Количество уровней",
+                        'class' => 'form-control',
                     ],
                     'required' => true,
-                    'label' => 'Количество уровней',
+                    'label' => false,
                 ]
             )
             ->add('sectors', CollectionType::class,[
+                'entry_options'  =>[
+                    'attr'      => [
+                        'class' => 'form-group create_sector'
+                    ]
+                ],
                 'entry_type' => SectorType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'label' => 'Количество уровней',
+                'label' => false,
             ])
         ;
     }

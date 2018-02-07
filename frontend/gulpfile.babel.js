@@ -25,11 +25,21 @@ var paths = {
     'app/styles/**/*.scss',
     'app/styles/**/*.css'
   ],
+  scripts_full: {
+    js: [
+      './app/scripts/main.js',
+      './app/scripts/jcanvas.js',
+      './app/scripts/script.js',
+      './app/scripts/sectors.js',
+      './app/scripts/circle_data.js'
+    ]
+  },
   scripts: {
     js: [
       './app/scripts/main.js',
       './app/scripts/jcanvas.js',
-      './app/scripts/script.js'
+      './app/scripts/script.js',
+      './app/scripts/sectors.js'
     ]
   },
   images: [
@@ -64,7 +74,7 @@ gulp.task('serve:dist', ['default'], () =>
 gulp.task('default', ['clean'], cb =>
     runSequence(
         'styles',
-        ['lint', 'html', 'scripts', 'images', 'copy'],
+        ['lint', 'html', 'scripts', 'scripts_full', 'images', 'copy'],
         'copy-bootstrap',
         'copy-fonts',
         'pug-dist',
@@ -148,8 +158,8 @@ gulp.task('html', () => {
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
-gulp.task('scripts', () =>
-    gulp.src(paths.scripts.js)
+gulp.task('scripts_full', () =>
+    gulp.src(paths.scripts_full.js)
         .pipe($.newer('.tmp/scripts'))
         .pipe($.sourcemaps.init())
         .pipe($.babel())
@@ -162,6 +172,22 @@ gulp.task('scripts', () =>
         .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest('dist/scripts'))
         .pipe(gulp.dest('.tmp/scripts'))
+);
+
+gulp.task('scripts', () =>
+    gulp.src(paths.scripts.js)
+        .pipe($.newer('.tmp/prod_scripts'))
+        .pipe($.sourcemaps.init())
+        .pipe($.babel())
+        .pipe($.sourcemaps.write())
+        .pipe(gulp.dest('.tmp/prod_scripts'))
+        .pipe($.concat('main.min.js'))
+        .pipe($.uglify({preserveComments: 'some'}))
+        // Output files
+        .pipe($.size({title: 'prod_scripts'}))
+        .pipe($.sourcemaps.write('.'))
+        .pipe(gulp.dest('dist/prod_scripts'))
+        .pipe(gulp.dest('.tmp/prod_scripts'))
 );
 
 
@@ -235,7 +261,7 @@ gulp.task('html-watcher', function () {
 
 //js-watcher
 gulp.task('js-watcher', function () {
-  gulp.watch(paths.scripts.js, ['clean_js','scripts']);
+  gulp.watch(paths.scripts.js, ['clean_js','scripts_full']);
   gulp.watch("dist/scripts/*").on('change', browserSync.reload);
 });
 

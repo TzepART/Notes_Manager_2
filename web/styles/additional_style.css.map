@@ -1,0 +1,1 @@
+{"version":3,"sources":["additional_style.css"],"names":[],"mappings":"AAAA,OACI,sBAAwB,CAC3B,AACD,iBACI,kBAAoB,CACvB","file":"additional_style.css","sourcesContent":["canvas {\n    border: 10px solid gray;\n}\n.header.clearfix{\n    margin-bottom: 20px;\n}\n"]}
