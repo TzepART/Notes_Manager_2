@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 
  {% block main %}
-     <ul>
-         {% for circle in circles %}
-             <li><a href="{{ path('notes_manager.circle.view', {id: circle.id}) }}">{{ circle.name }}</a></li>
-         {% endfor %}
-     </ul>
+     <div class="row">
+         <div class="jumbotron col-md-4 col-md-offset-4"><h2 class="circle_list_title">Список Ваших окружностей</h2>
+             <ul class="list-group">
+                 {% for circle in circles %}
+                     <li class="list-group-item"><a href="{{ path('notes_manager.circle.view', {id: circle.id}) }}">{{ circle.name }}</a></li>
+                 {% endfor %}
+             </ul>
+             <p><a class="btn btn-primary btn-lg circle_list_button" href="{{ path('notes_manager.circle.create') }}">Создать окружность</a></p>
+         </div>
+     </div>
  {% endblock %}
