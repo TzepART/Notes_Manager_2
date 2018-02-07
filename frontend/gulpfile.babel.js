@@ -27,10 +27,12 @@ var paths = {
   ],
   scripts_full: {
     js: [
+      './app/scripts/env_param.js',
       './app/scripts/main.js',
       './app/scripts/jcanvas.js',
       './app/scripts/script.js',
       './app/scripts/sectors.js',
+      './app/scripts/notes.js',
       './app/scripts/circle_data.js'
     ]
   },
@@ -39,7 +41,8 @@ var paths = {
       './app/scripts/main.js',
       './app/scripts/jcanvas.js',
       './app/scripts/script.js',
-      './app/scripts/sectors.js'
+      './app/scripts/sectors.js',
+      './app/scripts/notes.js'
     ]
   },
   images: [
@@ -77,6 +80,7 @@ gulp.task('default', ['clean'], cb =>
         ['lint', 'html', 'scripts', 'scripts_full', 'images', 'copy'],
         'copy-bootstrap',
         'copy-fonts',
+        'copy-data',
         'pug-dist',
         // 'generate-service-worker',
         'js-watcher',
@@ -230,6 +234,14 @@ gulp.task('copy-fonts', () =>
     ], {
       dot: true
     }).pipe(gulp.dest('dist/fonts'))
+        .pipe($.size({title: 'copy'}))
+);
+gulp.task('copy-data', () =>
+    gulp.src([
+      'app/note/api/*',
+    ], {
+      dot: true
+    }).pipe(gulp.dest('dist/note/api'))
         .pipe($.size({title: 'copy'}))
 );
 

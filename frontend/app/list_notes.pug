@@ -2,26 +2,42 @@ extends layout/base.pug
 
 block content
     .row
-        .jumbotron.col-md-6.col-md-offset-3
-            h2(style="text-align: center") Общая
+        .col-md-4
             .panel.panel-default
                 .panel-heading#headingOne(role="tab")
                     h4.panel-title
-                        a(data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-controls="collapseOne") Example1
+                        a(data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-controls="collapseOne") Circle1
                 #collapseOne.panel-collapse.collapse.in(role="tabpanel" aria-labelledby="headingOne")
                     .list-group
                         ul.list-group
-                            li.list-group-item.notes_link_by_list(style="background: rgb(256, 0, 0)")
-                                a(href="#collapseExample" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample") Notes1
+                            li.list-group-item.notes_link_by_list(style="background: gray")
+                                a(href="#collapseCircle" data-toggle="collapse" aria-expanded="false" aria-controls="collapseCircle") Category1
                                 a(href="detail_circle.html?id=1")
                                     i.fa.fa-adjust.fa-lg
-                                a(href="notes_edit.html?id=1")
+                                a(href="sector_edit.html?id=2")
                                     i.fa.fa-pencil.fa-lg
-                                .collapse.collapse_note#collapseExample
-                                    .well
-                                        | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque delectus
-                                        | doloribus eius, exercitationem impedit itaque provident sapiente sit tempora
-                                        | temporibus?
+                                .collapse.collapse_note#collapseCircle
+                                    .well_notes
+                                        ul.list-group
+                                            li.list-group-item.notes_link_by_list(style="background: rgb(256, 0, 0)")
+                                                a(href="#collapseCategory" aria-expanded="false" onclick="getNoteContent(1)" aria-controls="collapseCategory") Note1
+                                                a(href="detail_circle.html?id=1")
+                                                    i.fa.fa-adjust.fa-lg
+                                                a(href="notes_edit.html?id=1")
+                                                    i.fa.fa-pencil.fa-lg
+                                                .collapse.collapse_note#collapseCategory
+                                            mixin li-note(color, name, id)
+                                                li.list-group-item.notes_link_by_list(style="background: " + color)
+                                                    a(href="#collapseCategory" onclick="getNoteContent("+id+")" aria-controls="collapseCategory")= name
+                                                    a(href="")
+                                                        i.fa.fa-adjust.fa-lg
+                                                    a(href="")
+                                                        i.fa.fa-pencil.fa-lg
+                                            +li-note('rgb(227, 62, 47)','Note2', 2)
+                                            +li-note('rgb(227, 62, 47)','Note3', 3)
+                                            +li-note('rgb(199, 125, 95)','Note4', 4)
+                                            +li-note('rgb(199, 125, 95)','Note5', 5)
+                                            +li-note('rgb(171, 188, 143)','Note6', 6)
                             mixin li-note(color, name)
                                 li.list-group-item.notes_link_by_list(style="background: "+color)
                                     a(href="")= name
@@ -29,23 +45,36 @@ block content
                                         i.fa.fa-adjust.fa-lg
                                     a(href="")
                                         i.fa.fa-pencil.fa-lg
-                            +li-note('rgb(227, 62, 47)','Notes2')
-                            +li-note('rgb(227, 62, 47)','Notes3')
-                            +li-note('rgb(199, 125, 95)','Notes4')
-                            +li-note('rgb(199, 125, 95)','Notes5')
-                            +li-note('rgb(171, 188, 143)','Notes6')
+                            +li-note('gray','Category2')
+                            +li-note('gray','Category3')
+                            +li-note('gray','Category4')
+                            +li-note('gray','Category5')
+                            +li-note('gray','Category6')
                 .panel-heading#headingTwo(role="tab")
                     h4.panel-title
-                        a(data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-controls="collapseTwo" aria-expanded="false") Example2
+                        a(data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-controls="collapseTwo" aria-expanded="false") Circle2
                 #collapseTwo.panel-collapse.collapse(role="tabpanel" aria-labelledby="headingTwo")
                     .list-group
                         ul.list-group
-                            +li-note('rgb(256, 0, 0)','Notes1')
-                            +li-note('rgb(227, 62, 47)','Notes2')
-                            +li-note('rgb(227, 62, 47)','Notes3')
-                            +li-note('rgb(199, 125, 95)','Notes4')
-                            +li-note('rgb(199, 125, 95)','Notes5')
-                            +li-note('rgb(171, 188, 143)','Notes6')
+                            +li-note('rgb(256, 0, 0)','Category1')
+                            +li-note('rgb(227, 62, 47)','Category2')
+                            +li-note('rgb(227, 62, 47)','Category3')
+                            +li-note('rgb(199, 125, 95)','Category4')
+                            +li-note('rgb(199, 125, 95)','Category5')
+                            +li-note('rgb(171, 188, 143)','Category6')
+
+        .jumbotron.col-md-8
+            .row
+                .col-md-8
+                    div.note_view_title#note_view_title
+                        | Lorem ipsum do...
+                    div.note_view_text#note_view_text
+                        | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque delectus
+                        | doloribus eius, exercitationem impedit itaque provident sapiente sit tempora
+                        | temporibus?
+                .col-md-3.col-md-offset-1
+                    .form-group.form_submit
+                        a.btn.btn-primary.register_button(href="notes_edit.html") Редактировать
 
 
 

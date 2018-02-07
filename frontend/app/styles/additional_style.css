@@ -1,6 +1,26 @@
 canvas {
     border: 10px solid gray;
 }
+
+body{
+    background-color: #31708f;
+}
+
 .header.clearfix{
     margin-bottom: 20px;
+}
+
+.note_view_title{
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.note_view_text{
+    border: 2px solid black;
+    background: white;
+    padding: 10px;
+}
+
+.nav-justified{
+    background-color: white;
 }
