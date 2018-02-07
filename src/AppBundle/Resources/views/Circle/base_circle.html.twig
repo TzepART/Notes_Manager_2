@@ -6,12 +6,13 @@
      {% endblock %}
      <script>
        // setup an "add a tag" link
-       var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
-       var $newLinkLi = $('<li></li>').append($addTagLink);
+       //btn btn-primary btn-block
+       var $addTagLink = $('<a href="#" class="btn btn-primary btn-block">Добавить категорию</a>');
+       var $newLinkLi = $('<div></div>').append($addTagLink);
 
        jQuery(document).ready(function() {
          // Get the ul that holds the collection of tags
-         var $collectionHolder = $('ul.tags');
+         var $collectionHolder = $('div.sectors');
 
          // add the "add a tag" anchor and li to the tags ul
          $collectionHolder.append($newLinkLi);
@@ -52,10 +53,10 @@
          $collectionHolder.data('index', index + 1);
 
          // Display the form in the page in an li, before the "Add a tag" link li
-         var $newFormLi = $('<li></li>').append(newForm);
+         var $newFormLi = $(newForm);
 
          // also add a remove button, just for this example
-         $newFormLi.append('<a href="#" class="remove-tag">x</a>');
+         $newFormLi.append('<button class="remove-tag btn btn-danger"><i class="fa fa-remove fa-lg"></i></button>');
 
          $newLinkLi.before($newFormLi);
 
@@ -68,8 +69,8 @@
            return false;
          });
 
-         // add a delete link to the new form
-         addTagFormDeleteLink($newFormLi);
+//         // add a delete link to the new form
+//         addTagFormDeleteLink($newFormLi);
        }
 
        function addTagFormDeleteLink($tagFormLi) {
@@ -85,10 +86,4 @@
          });
        }
      </script>
-     <style>
-         li *{
-             display:inline-block;
-             margin:0 10px;
-         }
-     </style>
  {% endblock %}

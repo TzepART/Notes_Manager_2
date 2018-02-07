@@ -36,6 +36,11 @@ class CircleType extends AbstractType
                 ]
             )
             ->add('sectors', CollectionType::class,[
+                'entry_options'  =>[
+                    'attr'      => [
+                        'class' => 'form-group create_sector'
+                    ]
+                ],
                 'entry_type' => SectorType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

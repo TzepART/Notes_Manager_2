@@ -3,29 +3,38 @@
 {% block form_block %}
     <div class="row">
         {{ form_start(form) }}
-            <h2 style="text-align: center;">Создание окружности</h2>
-            {% if form_errors(form) is not empty %}
-                <div class="form-group">
-                    {{ form_errors(form) }}
-                </div>
-            {% endif %}
-            <div class="form-group create_circle">
-                {{ form_errors(form.name) }}
-                {{ form_widget(form.name) }}
-            </div>
+        <h2 style="text-align: center;">Создание окружности</h2>
+        {% if form_errors(form) is not empty %}
             <div class="form-group">
-                {{ form_errors(form.countLayer) }}
-                {{ form_widget(form.countLayer) }}
+                {{ form_errors(form) }}
             </div>
+        {% endif %}
+        <div class="form-group create_circle">
+            {{ form_errors(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="form-group">
+            {{ form_errors(form.countLayer) }}
+            {{ form_widget(form.countLayer) }}
+        </div>
 
-            <h2 style="text-align: center;">Создать секторы</h2>
-            <ul class="tags" data-prototype="{{ form_widget(form.sectors.vars.prototype)|e('html_attr') }}">
-            </ul>
+        <h2 style="text-align: center;">Создать категории</h2>
 
-            <div class="form-group form_submit">
-                <a class="btn btn-primary btn-block" onclick="return addField()" href="#">Добавить сектор</a>
-                <input class="btn btn-success btn-block" name="save" value="Создать окружность" type="submit"/>
-            </div>
+        {# TODO change on dinamic content in data-prototype#}
+        {#<div class="sectors" data-prototype="{{ form_widget(form.sectors.vars.prototype)|e('html_attr') }}"></div>#}
+
+        <div class="sectors" data-prototype='<div id="circle_sectors___name__" class="form-group
+        create_sector"><input type="text" id="circle_sectors___name___name" name="circle[sectors][__name__][name]"
+        required="required" placeholder="Название категории" class="form-control"/><input type="color"
+        id="circle_sectors___name___color" name="circle[sectors][__name__][color]" required="required"
+        placeholder="Цвет" value="#FFD700" class="form-control"/></div>'>
+        </div>
+
+        <div class="form-group form_submit">
+            {#<a class="btn btn-primary btn-block" onclick="return addField()" href="#">Добавить сектор</a>#}
+            <input class="btn btn-success btn-block" name="save" value="Создать окружность" type="submit"/>
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}
+
