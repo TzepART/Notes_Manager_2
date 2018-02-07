@@ -24,26 +24,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class CategoryController extends Controller
 {
-    /**
-     * list of categories
-     * @Route("/", name="notes_manager.category.list")
-     * @Method("GET")
-     * @return array
-     * @Template()
-     */
-    public function listAction()
-    {
-        $user = $this->getUser();
-
-        // TODO output circles
-        if($user instanceof User){
-            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user' => $user]);
-        }else{
-            throw new AccessDeniedHttpException();
-        }
-
-        return ['circles' => $circles];
-    }
 
     /**
      * View of category
