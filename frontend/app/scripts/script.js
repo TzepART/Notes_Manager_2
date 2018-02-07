@@ -603,60 +603,6 @@ function delRayNamePopUpAndCircleAllLabels() {
 }
 
 
-/*
-* block for creating sectors
-* */
-
-var countOfFields = 3; // Текущее число полей
-var curFieldNameId = 3; // Уникальное значение для атрибута name
-var maxFieldLimit = 12; // Максимальное число возможных полей
-function deleteField(a) {
-//if (countOfFields > 0) {
-  var arrInput = a.parentNode.getElementsByTagName('input');
-  var name = arrInput[0].value;
-
-//            BX.ajax.post(window.location.href, {delete_name : name} ,function(){});
-// Получаем доступ к ДИВу, содержащему поле
-  var contDiv = a.parentNode;
-// Удаляем этот ДИВ из DOM-дерева
-  contDiv.parentNode.removeChild(contDiv);
-// Уменьшаем значение текущего числа полей
-  countOfFields--;
-//}
-// Возвращаем false, чтобы не было перехода по сслыке
-  return false;
-}
-
-function addField() {
-// Проверяем, не достигло ли число полей максимума
-  if (countOfFields >= maxFieldLimit) {
-    alert("Число полей достигло своего максимума = " + maxFieldLimit);
-    return false;
-  }
-// Увеличиваем текущее значение числа полей
-  countOfFields++;
-// Увеличиваем ID
-  curFieldNameId++;
-// Создаем элемент ДИВ
-  var div = document.createElement("div");
-  div.setAttribute("class", "form-group create_sector");
-// Добавляем HTML-контент с пом. свойства innerHTML
-  div.innerHTML = "<input type=\"text\" placeholder=\"Название сектора\"  name=\"sector_name[" + curFieldNameId + "]\" class=\"form-control\" value=\"\" autocomplete=\"off\"/>" +
-      "<input type=\"color\" placeholder=\"Цвет сектора\"  name=\"sector_color[" + curFieldNameId + "]\" class=\"form-control\" value=\"#FFFAFA\" autocomplete=\"off\"/>" +
-      " <input type=\"button\" class=\"form-control\" onclick=\"return deleteField(this)\" href=\"#\" value=\"x\">";
-// Добавляем новый узел в конец списка полей
-  document.getElementById("formCircleCreate").appendChild(div);
-// Возвращаем false, чтобы не было перехода по сслыке
-  return false;
-}
-
-
-
-
-
-
-
-
 var numLayers = 4;
 
 var dataSector1 = {

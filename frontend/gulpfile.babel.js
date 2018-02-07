@@ -29,7 +29,8 @@ var paths = {
     js: [
       './app/scripts/main.js',
       './app/scripts/jcanvas.js',
-      './app/scripts/script.js'
+      './app/scripts/script.js',
+      './app/scripts/sectors.js'
     ]
   },
   images: [
