@@ -1,11 +1,34 @@
-{% extends 'base.html.twig' %}
+{% extends '@App/Note/base_note.html.twig' %}
 
-{% block main %}
+{% block note_form %}
     {{ form_start(form) }}
     {{ form_errors(form) }}
-    <div>
-        <button type="submit" class="feedback__send js-feedback-send">Save</button>
+
+    <h2 style="text-align: center;">Создать Заметку</h2>
+
+    <div class="form-group create_note">
+        {{ form_errors(form.title) }}
+        {{ form_row(form.title) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_errors(form.text) }}
+        {{ form_row(form.text) }}
+    </div>
+
+    <h2 style="text-align: center;">Размещение заметки</h2>
+    <div class="form-group">
+        {{ form_errors(form.category) }}
+        {{ form_row(form.category) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_errors(form.noteLabel) }}
+        {{ form_row(form.noteLabel) }}
+    </div>
+
+    <div class="form-group form_submit">
+        <input class="btn btn-success btn-block" name="save" type="submit" value="Сохранить заметку" placeholder="Сохранить заметку"/>
     </div>
     {{ form_end(form) }}
 {% endblock %}
-

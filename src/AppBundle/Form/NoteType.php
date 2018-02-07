@@ -8,7 +8,6 @@ use AppBundle\Entity\User;
 use AppBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -56,7 +55,8 @@ class NoteType extends AbstractType
         $builder
             ->add('title', null, [
                     'attr' => [
-                        'placeholder'=> "Заголовок"
+                        'placeholder'=> "Заголовок",
+                        'class' => 'form-control'
                     ],
                     'required' => true,
                     'label' => 'Заголовок',
@@ -64,7 +64,9 @@ class NoteType extends AbstractType
             )
             ->add('text', null, [
                     'attr' => [
-                        'placeholder'=> "Текст"
+                        'placeholder'=> "Текст",
+                        'class' => 'form-control',
+                        'row' => '3',
                     ],
                     'required' => true,
                     'label' => 'Текст',
@@ -72,21 +74,21 @@ class NoteType extends AbstractType
             )
             ->add('category',EntityType::class,[
                 'class' => Category::class,
+                'attr' => [
+                    'class' => 'form-control'
+                ],
                 'required' => false,
                 'group_by' => 'circle',
+                'label' => 'Категория',
                 'query_builder' => function(CategoryRepository $repo) {
                     return $repo->queryCategoriesByUser($this->getUser());
-                },
+                }
             ])
             ->add('noteLabel', NoteLabelType::class, [
-                    'attr' => [
-                        'placeholder'=> "Важность"
-                    ],
                     'required' => false,
                     'label' => false,
                 ]
             )
-            ->add('save', SubmitType::class)
         ;
     }
     
