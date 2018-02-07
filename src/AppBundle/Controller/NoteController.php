@@ -123,6 +123,7 @@ class NoteController extends Controller
             /** @var NoteLabel $noteLabel */
             $noteLabel = $note->getNoteLabel();
             if($category instanceof Category && $noteLabel instanceof NoteLabel){
+                // TODO not create label if category wasn't selected
                 $sector = $category->getSector();
                 $angle = $sector->getBeginAngle() + ($sector->getEndAngle()-$sector->getBeginAngle())/2;
                 $noteLabel->setNote($note)
