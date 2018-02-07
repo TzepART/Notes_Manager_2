@@ -22,7 +22,11 @@
             <li role="presentation"><a href="{{ path('notes_manager.note.incoming_list') }}">Входящие</a></li>
             <li role="presentation"><a href="{{ path('notes_manager.circle.create') }}">Добавить окружность</a></li>
             <li role="presentation"><a href="{{ path('notes_manager.note.create') }}">Добавить заметку</a></li>
-            <li class="active" role="presentation"><a href="{{ path('fos_user_registration_register') }}">Регистрация</a></li>
+            {% if is_granted('ROLE_USER') %}
+                <li class="active" role="presentation"><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
+            {% else %}
+                <li class="active" role="presentation"><a href="{{ path('fos_user_security_login') }}">Login</a></li>
+            {% endif %}
         </ul>
     </div>
     {% block main %}
