@@ -13,7 +13,7 @@ var shadowColor = "white";
  * */
 
 /**
- * Из декартовой в полярную систему координат.
+ * From dec in polar
  *
  * @param {float} x
  * @param {float} y
@@ -253,9 +253,6 @@ function borderForSector(angle, sectorLeftId, sectorRightId, angleMin, angelMax)
       var endAngleR = sectorRight.end;
       var colorR = sectorRight.color;
 
-      // sectorLeft.end = pol.degr;
-      // sectorRight.start = pol.degr;
-
       var newLeftSectorMinAngle = sectorLeft.start;
       var newRightSectorMinAngle = pol.degr;
       var oldLeftSectorMinAngle = sectorLeft.start;
@@ -272,13 +269,6 @@ function borderForSector(angle, sectorLeftId, sectorRightId, angleMin, angelMax)
       createSectorNew(sectorRightId,pol.degr,endAngleR, circleId, numLayers, colorR);
 
       setHightMoveLayerToLayer();
-
-      // $('canvas').removeLayer('border_'+sectorLeftId+'_'+sectorRightId);
-      // borderForSector(pol.degr,sectorLeftId,sectorRightId);
-
-
-      // updateCoordinateLabel(layer.data.circleId,layer.data.id,pol.distance/bigRadius,pol.degr);
-      // delRayNamePopUpAndCircleByLabel(layer.data.id);
     },
     drag: function(layer) {
       var pol = cartesian2Polar(layer.x, layer.y);
