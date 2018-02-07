@@ -25,52 +25,53 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-      {# @var sector \AppBundle\Entity\Sector #}
-      {% for sector in circle.sectors %}
-          var dataSector = {
-            id: {{ sector.id }},
-            numLayers: {{ circle.countLayer }},
-            color: '{{ sector.color }}',
-            beginAngle: {{ sector.beginAngle }},
-            endAngle: {{ sector.endAngle }},
-            name: '{{ sector.category.name }}',
-            circle_id: {{ circle.id }},
-          };
+      $(document).ready(function () {
+          {# @var sector \AppBundle\Entity\Sector #}
+          {% for sector in circle.sectors %}
+        var dataSector = {
+          id: {{ sector.id }},
+          numLayers: {{ circle.countLayer }},
+          color: '{{ sector.color }}',
+          beginAngle: {{ sector.beginAngle }},
+          endAngle: {{ sector.endAngle }},
+          name: '{{ sector.category.name }}',
+          circle_id: {{ circle.id }},
+        };
 
-          createSectorNew(dataSector.id, dataSector.beginAngle, dataSector.endAngle, dataSector.circle_id, dataSector.numLayers, dataSector.color);
-      {% endfor %}
+        createSectorNew(dataSector.id, dataSector.beginAngle, dataSector.endAngle, dataSector.circle_id, dataSector.numLayers, dataSector.color);
+          {% endfor %}
 
-      {# @var sector \AppBundle\Entity\Sector #}
-      {% set firstSector = null %}
-      {% for sector in circle.sectors %}
-            {% if loop.index == 1 %}
-                {% set firstSector = sector %}
-            {% endif %}
+          {# @var sector \AppBundle\Entity\Sector #}
+          {% set firstSector = null %}
+          {% for sector in circle.sectors %}
+          {% if loop.index == 1 %}
+          {% set firstSector = sector %}
+          {% endif %}
 
-            {% if circle.sectors[loop.index] is defined %}
-                {% set nextSector = circle.sectors[loop.index] %}
-            {% else %}
-                {% set nextSector = firstSector %}
-            {% endif %}
+          {% if circle.sectors[loop.index] is defined %}
+          {% set nextSector = circle.sectors[loop.index] %}
+          {% else %}
+          {% set nextSector = firstSector %}
+          {% endif %}
 
-            borderForSector({{ sector.endAngle }},{{ sector.id }},{{ nextSector.id }}, {{ sector.beginAngle }},{{ nextSector.endAngle }});
-      {% endfor %}
+        borderForSector({{ sector.endAngle }},{{ sector.id }},{{ nextSector.id }}, {{ sector.beginAngle }},{{ nextSector.endAngle }});
+          {% endfor %}
 
-      {# block for create labels #}
-      {# @var sector \AppBundle\Entity\Sector #}
-      {% for sector in circle.sectors %}
+          {# block for create labels #}
+          {# @var sector \AppBundle\Entity\Sector #}
+          {% for sector in circle.sectors %}
           {# @var noteLabel \AppBundle\Entity\NoteLabel #}
           {% for noteLabel in sector.noteLabels %}
-              var dataLabel = {
-                id: {{ noteLabel.note.id }},
-                radius: {{ noteLabel.radius }},
-                degr: {{ noteLabel.angle }},
-                name: '{{ noteLabel.note.title }}'
-              };
-              createLabel(dataLabel);
+        var dataLabel = {
+          id: {{ noteLabel.note.id }},
+          radius: {{ noteLabel.radius }},
+          degr: {{ noteLabel.angle }},
+          name: '{{ noteLabel.note.title }}'
+        };
+        createLabel(dataLabel);
           {% endfor %}
-      {% endfor %}
-
+          {% endfor %}
+      })
     </script>
 {% endblock %}
 
