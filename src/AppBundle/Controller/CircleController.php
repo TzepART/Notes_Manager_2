@@ -55,6 +55,19 @@ class CircleController extends Controller
      */
     public function viewAction(Circle $circle)
     {
+        return ['circle' => $circle];
+    }
+
+    /**
+     * Edit of circle
+     * @Route("/edit/{id}/", name="notes_manager.circle.edit")
+     * @Method("GET")
+     * @param Circle $circle
+     * @return array
+     * @Template()
+     */
+    public function editAction(Circle $circle)
+    {
         $circleForm = $this->getCircleForm($circle);
 
         return ['form' => $circleForm->createView()];
@@ -124,7 +137,7 @@ class CircleController extends Controller
             $em->persist($circle);
             $em->flush();
 
-            return $this->redirectToRoute('notes_manager.circle.view',['id' => $circle->getId()]);
+            return $this->redirectToRoute('notes_manager.circle.edit',['id' => $circle->getId()]);
         }
 
         return $this->render('@App/Circle/create.html.twig', [
@@ -201,10 +214,10 @@ class CircleController extends Controller
             $em->persist($circle);
             $em->flush();
 
-            return $this->redirectToRoute('notes_manager.circle.view',['id' => $circle->getId()]);
+            return $this->redirectToRoute('notes_manager.circle.edit',['id' => $circle->getId()]);
         }
 
-        return $this->render('@App/Circle/view.html.twig', [
+        return $this->render('@App/Circle/edit.html.twig', [
             'form' => $circleForm->createView()
         ]);
     }
