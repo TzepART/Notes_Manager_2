@@ -43,11 +43,12 @@ class AppExtension extends AbstractExtension
 
         $arColorLabel = [
             ColorManager::RED => $colorRed[ColorManager::RED]*(1 - $noteLabel->getRadius()),
-            ColorManager::GREEN => $colorSector[ColorManager::GREEN] - ($colorSector[ColorManager::GREEN] - $colorRed[ColorManager::GREEN])*$noteLabel->getRadius(),
-            ColorManager::BLUE => $colorSector[ColorManager::BLUE] - ($colorSector[ColorManager::BLUE] - $colorRed[ColorManager::BLUE])*$noteLabel->getRadius(),
+            ColorManager::GREEN => $colorSector[ColorManager::GREEN] - ($colorSector[ColorManager::GREEN] - $colorRed[ColorManager::GREEN])*(1 - $noteLabel->getRadius()),
+            ColorManager::BLUE => $colorSector[ColorManager::BLUE] - ($colorSector[ColorManager::BLUE] - $colorRed[ColorManager::BLUE])*(1 - $noteLabel->getRadius()),
         ];
 
         $color = $this->colorManager->hexArrayInRgbString($arColorLabel);
+//        $color = $this->colorManager->hexArrayInRgbString($colorSector);
 
         return $color;
     }
