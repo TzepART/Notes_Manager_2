@@ -36,7 +36,6 @@ class LoadCirclesData extends Fixture implements OrderedFixtureInterface, Contai
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->faker = FakerFactory::create();
     }
 
     /**
@@ -46,6 +45,7 @@ class LoadCirclesData extends Fixture implements OrderedFixtureInterface, Contai
      */
     public function load(ObjectManager $manager)
     {
+        $this->faker = FakerFactory::create('ru_RU');
 
         foreach (self::getCirclesDate() as $name => $circleData) {
             $circle = new Circle();
@@ -80,7 +80,7 @@ class LoadCirclesData extends Fixture implements OrderedFixtureInterface, Contai
     {
         $arData = [
             "Circle1User0" =>[
-                "countSectors" => 1,
+                "countSectors" => 4,
                 "userNumber" => 0,
                 "circleNumber" => 1,
             ],
@@ -100,7 +100,7 @@ class LoadCirclesData extends Fixture implements OrderedFixtureInterface, Contai
                 "circleNumber" => 4,
             ],
             "Circle1User1" =>[
-                "countSectors" => 1,
+                "countSectors" => 4,
                 "userNumber" => 1,
                 "circleNumber" => 1,
             ],
@@ -120,7 +120,7 @@ class LoadCirclesData extends Fixture implements OrderedFixtureInterface, Contai
                 "circleNumber" => 4,
             ],
             "Circle1User2" =>[
-                "countSectors" => 1,
+                "countSectors" => 4,
                 "userNumber" => 2,
                 "circleNumber" => 1,
             ],
@@ -135,7 +135,7 @@ class LoadCirclesData extends Fixture implements OrderedFixtureInterface, Contai
                 "circleNumber" => 3,
             ],
             "Circle1User3" =>[
-                "countSectors" => 1,
+                "countSectors" => 4,
                 "userNumber" => 3,
                 "circleNumber" => 1,
             ],
@@ -160,7 +160,7 @@ class LoadCirclesData extends Fixture implements OrderedFixtureInterface, Contai
                 "circleNumber" => 5,
             ],
             "Circle1User4" =>[
-                "countSectors" => 1,
+                "countSectors" => 4,
                 "userNumber" => 4,
                 "circleNumber" => 1,
             ],

@@ -24,3 +24,7 @@ body{
 .nav-justified{
     background-color: white;
 }
+
+.masthead h3{
+    color: white;
+}

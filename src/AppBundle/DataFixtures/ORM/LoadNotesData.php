@@ -15,7 +15,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 class LoadNotesData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     const REFERENCE_PREFIX = 'app_note_';
-    const COUNT_NOTES = 160;
+    const COUNT_NOTES = 250;
 
 
     /**
@@ -37,7 +37,8 @@ class LoadNotesData extends Fixture implements OrderedFixtureInterface, Containe
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->faker = FakerFactory::create();
+        $this->faker = FakerFactory::create('ru_RU');
+
     }
 
     /**
@@ -52,8 +53,8 @@ class LoadNotesData extends Fixture implements OrderedFixtureInterface, Containe
             $note = new Note();
             $userNumber = $i%5;
 
-            $note->setTitle($this->faker->word)
-                ->setText($this->faker->text(200))
+            $note->setTitle($this->faker->realText(20))
+                ->setText($this->faker->realText(200))
                 ->setUser($this->getReference(LoadUsersData::REFERENCE_PREFIX . $userNumber));
 
             $manager->persist($note);

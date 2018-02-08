@@ -35,7 +35,7 @@ class LoadCategoriesData extends Fixture implements OrderedFixtureInterface, Con
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->faker = FakerFactory::create();
+        $this->faker = FakerFactory::create('ru_RU');
     }
 
     /**
@@ -51,7 +51,7 @@ class LoadCategoriesData extends Fixture implements OrderedFixtureInterface, Con
             for($i = 0; $i<$circlesDatum["countSectors"]; $i++){
                 $category = new Category();
 
-                $category->setName($this->faker->word);
+                $category->setName($this->faker->realText(20));
 
                 $manager->persist($category);
 

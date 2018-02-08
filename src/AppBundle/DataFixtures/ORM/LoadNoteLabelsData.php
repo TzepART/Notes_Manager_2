@@ -18,7 +18,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 class LoadNoteLabelsData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     const REFERENCE_PREFIX = 'app_note_label_';
-    const COUNT_NOTE_LABELS = 130;
+    const COUNT_NOTE_LABELS = 220;
 
     /**
      * @var ContainerInterface
@@ -44,7 +44,7 @@ class LoadNoteLabelsData extends Fixture implements OrderedFixtureInterface, Con
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->faker = FakerFactory::create();
+        $this->faker = FakerFactory::create('ru_RU');
     }
 
     /**
@@ -54,6 +54,7 @@ class LoadNoteLabelsData extends Fixture implements OrderedFixtureInterface, Con
      */
     public function load(ObjectManager $manager)
     {
+
         for($i=0;$i < LoadNotesData::COUNT_NOTES; $i++) {
             $this->notes[] = $this->getReference(LoadNotesData::REFERENCE_PREFIX.$i);
         }
