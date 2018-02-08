@@ -18,7 +18,7 @@ class NoteLabelType extends AbstractType
                     'min' => 0,
                     'max' => 1,
                     'step' => 0.01,
-                    'class' => 'form-control'
+                    'class' => 'form-control range blue'
                 ),
                 'label' => 'Важность'
             ]);
