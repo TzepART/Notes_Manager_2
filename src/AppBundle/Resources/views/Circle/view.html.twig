@@ -7,13 +7,12 @@
             <canvas id="canvas" width="600" height="600"></canvas>
             <div style="margin-top: 10px;">
                 <div class="detail_circle_group_buttons">
-                    <a class="btn btn-primary btn-lg" href="{{ path('notes_manager.note.list') }}">Список заметок</a>
+                    <a class="btn btn-primary btn-lg" href="{{ path('notes_manager.circle.note_list_by_circle', {id: circle.id}) }}">Список заметок</a>
                     <a class="btn btn-primary btn-lg" href="{{ path('notes_manager.circle.edit', {id: circle.id}) }}">Редактировать окружность</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-2">
+        <div class="col-md-1 col-md-offset-2">
             <div class="detail_circle_group_buttons">
                 <a class="btn btn-primary btn-lg" id="create_label_link" href="{{ path('notes_manager.note.create') }}">Добавить заметку</a>
                 <a class="btn btn-primary btn-lg" id="pop_label_link" href="" style="display: none;">Посмотреть заметку</a>

@@ -43,7 +43,30 @@ class NoteController extends Controller
             throw new AccessDeniedHttpException();
         }
 
-        return ['circles' => $circles];
+        return ['circles' => $circles, 'selectCircle' => null, 'selectCategory' => null, 'selectNote' => null];
+    }
+
+
+    /**
+     * list of notes by note
+     * @Route("/{id}/", name="notes_manager.note.list_by_category_and_note", requirements={"id"="\d+"})
+     * @Method("GET")
+     * @param Note $note
+     * @return Response
+     */
+    public function listByNoteAction(Note $note)
+    {
+        $user = $this->getUser();
+
+        if($user instanceof User){
+            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user' => $user]);
+        }else{
+            throw new AccessDeniedHttpException();
+        }
+
+        // TODO check, that note has noteLabel
+
+        return $this->render('@App/Note/list.html.twig',['circles' => $circles, 'selectCircle' => $note->getCategory()->getSector()->getCircle(), 'selectCategory' => $note->getCategory(),'selectNote' => $note]);
     }
 
     /**
@@ -68,7 +91,7 @@ class NoteController extends Controller
 
     /**
      * View of note
-     * @Route("/view/{id}/", name="notes_manager.note.view")
+     * @Route("/view/{id}/", name="notes_manager.note.view", requirements={"id"="\d+"})
      * @Method("GET")
      * @param Note $note
      * @return array

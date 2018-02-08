@@ -26,8 +26,28 @@ class CategoryController extends Controller
 {
 
     /**
+     * list of notes by note
+     * @Route("/{id}/", name="notes_manager.category.note_list_by_category", requirements={"id"="\d+"})
+     * @Method("GET")
+     * @param Category $category
+     * @return Response
+     */
+    public function listByCategoryAction(Category $category)
+    {
+        $user = $this->getUser();
+
+        if($user instanceof User){
+            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user' => $user]);
+        }else{
+            throw new AccessDeniedHttpException();
+        }
+
+        return $this->render('@App/Note/list.html.twig',['circles' => $circles,'selectCircle' => $category->getSector()->getCircle(), 'selectCategory' => $category, 'selectNote' => $category->getNotes()->last()]);
+    }
+
+    /**
      * View of category
-     * @Route("/view/{id}/", name="notes_manager.category.view")
+     * @Route("/view/{id}/", name="notes_manager.category.view", requirements={"id"="\d+"})
      * @Method("GET")
      * @param Category $category
      * @return array

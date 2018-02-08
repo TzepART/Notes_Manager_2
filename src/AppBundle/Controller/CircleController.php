@@ -27,7 +27,7 @@ class CircleController extends Controller
 {
     /**
      * list of circles
-     * @Route("/", name="notes_manager.circle.list")
+     * @Route("/", name="notes_manager.circle.list", requirements={"id"="\d+"})
      * @Method("GET")
      * @return array
      * @Template()
@@ -46,8 +46,32 @@ class CircleController extends Controller
     }
 
     /**
+     * list of notes by circle
+     * @Route("/{id}/", name="notes_manager.circle.note_list_by_circle", requirements={"id"="\d+"})
+     * @Method("GET")
+     * @param Circle $circle
+     * @return Response
+     */
+    public function listByCircleAction(Circle $circle)
+    {
+        $user = $this->getUser();
+
+        if($user instanceof User){
+            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user' => $user]);
+        }else{
+            throw new AccessDeniedHttpException();
+        }
+        /** @var Sector $sector */
+        $sector = $circle->getSectors()->first();
+        // TODO check exist notes and categories
+
+        return $this->render('@App/Note/list.html.twig',['circles' => $circles,'selectCircle' => $circle, 'selectCategory' => $sector, 'selectNote' => $sector->getCategory()->getNotes()->first()]);
+    }
+
+
+    /**
      * View of circle
-     * @Route("/view/{id}/", name="notes_manager.circle.view")
+     * @Route("/view/{id}/", name="notes_manager.circle.view", requirements={"id"="\d+"})
      * @Method("GET")
      * @param Circle $circle
      * @return array
@@ -60,7 +84,7 @@ class CircleController extends Controller
 
     /**
      * Edit of circle
-     * @Route("/edit/{id}/", name="notes_manager.circle.edit")
+     * @Route("/edit/{id}/", name="notes_manager.circle.edit", requirements={"id"="\d+"})
      * @Method("GET")
      * @param Circle $circle
      * @return array
