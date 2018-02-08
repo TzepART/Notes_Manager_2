@@ -155,6 +155,7 @@ class CircleController extends Controller
      */
     public function editCircleAction(Request $request, Circle $circle)
     {
+        // TODO add logic for change noteLabel's angles
         $originalSectors = $this->getOriginalSectorsByCirrcle($circle);
 
         $circleForm = $this->getCircleForm($circle);
