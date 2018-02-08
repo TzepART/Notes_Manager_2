@@ -51,6 +51,7 @@ class Sector
     /**
      * @var NoteLabel[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\NoteLabel", mappedBy="sector", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OrderBy({"radius" = "ASC"})
      */
     protected $noteLabels;
 

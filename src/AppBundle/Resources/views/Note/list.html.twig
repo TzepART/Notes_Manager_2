@@ -26,12 +26,14 @@
                                          <div class="well_notes">
                                              <ul class="list-group">
                                                  {# @var note \AppBundle\Entity\Note #}
-                                                 {% for note in category.notes %}
+                                                 {# @var noteLabel \AppBundle\Entity\NoteLabel #}
+                                                 {% for noteLabel in sector.noteLabels %}
+                                                     {% set note = noteLabel.note %}
                                                      {% if selectNote is null %}
                                                          {% set selectNote = note %}
                                                      {% endif %}
-                                                     <li class="list-group-item notes_link_by_list" style="background: lightseagreen;">
-                                                         <a href="#collapseNote{{ note.id }}" aria-expanded="false" onclick="getNoteContent({{ note.id }})" aria-controls="collapseNote{{ note.id }}">{{ note.title }}</a>
+                                                     <li class="list-group-item notes_link_by_list" style="background: {{ getLabelColor(noteLabel) }};">
+                                                         <a href="#collapseNote{{ note.id }}" aria-expanded="false" onclick="getNoteContent({{ note.id }})" aria-controls="collapseNote{{ note.id }}">{{ note.title }} - {{ noteLabel.radius }}</a>
                                                          <a href="{{ path('notes_manager.circle.view', {id: circle.id}) }}"><i class="fa fa-adjust fa-lg"></i></a>
                                                          <a href="{{ path('notes_manager.note.view', {id: note.id}) }}"><i class="fa fa-pencil fa-lg"></i></a>
                                                          <div class="collapse collapse_note" id="collapseNote{{ note.id }}"></div>

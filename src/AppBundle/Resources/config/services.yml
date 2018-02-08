@@ -1,4 +1,14 @@
 services:
     app.note_label_manager:
         class: AppBundle\Service\NoteLabelManager
-        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        arguments: [@service_container, '@doctrine.orm.entity_manager']
+
+    app.note_color_manager:
+        class: AppBundle\Service\NoteLabelManager
+        arguments: [@service_container, '@doctrine.orm.entity_manager']
+
+    app.twig.app_extension:
+        class: AppBundle\Twig\AppExtension
+        arguments: [@app.note_color_manager]
+        tags:
+            - { name: twig.extension }

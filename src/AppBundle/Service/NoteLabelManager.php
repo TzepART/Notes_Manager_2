@@ -7,8 +7,8 @@
  */
 namespace AppBundle\Service;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\Container;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class NoteLabelManager
@@ -17,21 +17,21 @@ use Symfony\Component\DependencyInjection\Container;
 class NoteLabelManager
 {
     /**
-     * @var EntityManager $em
+     * @var ObjectManager $em
      */
     protected $em;
 
     /**
-     * @var Container $container
+     * @var ContainerInterface $container
      * */
     protected $container;
 
 
     /**
-     * @param Container $container
-     * @param EntityManager $em
+     * @param ContainerInterface $container
+     * @param ObjectManager $em
      */
-    public function __construct(Container $container, EntityManager $em)
+    public function __construct(ContainerInterface $container, ObjectManager $em)
     {
         $this->em = $em;
         $this->container = $container;
