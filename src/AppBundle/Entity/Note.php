@@ -45,7 +45,7 @@ class Note
     private $user;
 
     /**
-     * @var Category
+     * @var Category|null
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="notes")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
@@ -136,7 +136,7 @@ class Note
     }
 
     /**
-     * @return Category
+     * @return Category|null
      */
     public function getCategory()
     {
@@ -144,10 +144,10 @@ class Note
     }
 
     /**
-     * @param Category $category
+     * @param Category|null $category
      * @return $this
      */
-    public function setCategory(Category $category)
+    public function setCategory($category)
     {
         $this->category = $category;
         return $this;
@@ -171,7 +171,11 @@ class Note
         return $this;
     }
 
-
+    public function setNoteLabelNull()
+    {
+        $this->noteLabel = null;
+        return $this;
+    }
 
 }
 

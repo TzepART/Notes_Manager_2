@@ -119,10 +119,10 @@ class NoteLabel
     }
 
     /**
-     * @param Sector $sector
+     * @param Sector|null $sector
      * @return $this
      */
-    public function setSector(Sector $sector)
+    public function setSector($sector)
     {
         $this->sector = $sector;
         return $this;

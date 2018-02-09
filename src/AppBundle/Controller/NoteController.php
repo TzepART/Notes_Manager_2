@@ -6,6 +6,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Circle;
 use AppBundle\Entity\Note;
 use AppBundle\Entity\NoteLabel;
+use AppBundle\Entity\Sector;
 use AppBundle\Entity\User;
 use AppBundle\Form\NoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -145,6 +146,7 @@ class NoteController extends Controller
 
             /** @var NoteLabel $noteLabel */
             $noteLabel = $note->getNoteLabel();
+
             if($category instanceof Category && $noteLabel instanceof NoteLabel){
                 // TODO not create label if category wasn't selected
                 $sector = $category->getSector();
@@ -153,6 +155,8 @@ class NoteController extends Controller
                     ->setSector($sector)
                     ->setAngle($angle);
                 $em->persist($noteLabel);
+            }else{
+                $note->setNoteLabelNull();
             }
 
             $em->persist($note);
@@ -180,6 +184,7 @@ class NoteController extends Controller
 
         $noteForm->handleRequest($request);
 
+        /** @var Note $note */
         $note = $noteForm->getData();
 
         if ($noteForm->isValid()) {
@@ -191,16 +196,18 @@ class NoteController extends Controller
 
             /** @var NoteLabel $noteLabel */
             $noteLabel = $note->getNoteLabel();
-            if($category instanceof Category && $noteLabel instanceof NoteLabel){
+            if (($category instanceof Category) && ($noteLabel instanceof NoteLabel)) {
                 $sector = $category->getSector();
-                if($sector->getId() != $noteLabel->getSector()->getId()){
-                    $angle = $sector->getBeginAngle() + ($sector->getEndAngle()-$sector->getBeginAngle())/2;
+//              // if noteLabel is new or noteLabel has new Sector - change sector
+                if (!($noteLabel->getSector() instanceof Sector) || $sector->getId() != $noteLabel->getSector()->getId()) {
+                    $angle = $sector->getBeginAngle() + ($sector->getEndAngle() - $sector->getBeginAngle()) / 2;
                     $noteLabel->setNote($note)
                         ->setSector($sector)
                         ->setAngle($angle);
                     $em->persist($noteLabel);
                 }
-            }else{
+            } else {
+                $note->setNoteLabelNull();
                 $em->remove($noteLabel);
             }
 
