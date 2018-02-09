@@ -12,13 +12,13 @@ block content
                     | delectus doloribus eius, exercitationem impedit itaque provident
                     | sapiente sit tempora temporibus?
             mixin sectors(...names)
-                select.form-control(name=select_sector)
+                select.form-control#note_category(name=select_sector)
                     each name in names
                         option= name
-            +sectors('Путешествие','Выберите сектор','Общая','Работа')
+            +sectors('','Путешествие','Выберите сектор','Общая','Работа')
             .form-group
                 label Важность
-                input.form-control.range.blue(name="layers_number" type="range" placeholder="Уровень срочности" value="" min=0 max=1 step=0.01)
+                input.form-control.range.blue#note_noteLabel_radius(name="layers_number" type="range" placeholder="Уровень срочности" value="" min=0 max=1 step=0.01)
             .form-group.form_submit
                 input.btn.btn-success.btn-block(name="save" type="submit" value="Сохранить заметку" placeholder="Сохранить заметку")
             a.btn.btn-primary.btn-block(type="button" href="list_notes.html?id=1") Назад к списку

@@ -66,7 +66,6 @@ class NoteController extends Controller
         }
 
         // TODO check, that note has noteLabel
-
         return $this->render('@App/Note/list.html.twig',['circles' => $circles, 'selectCircle' => $note->getCategory()->getSector()->getCircle(), 'selectCategory' => $note->getCategory(),'selectNote' => $note]);
     }
 
@@ -148,7 +147,6 @@ class NoteController extends Controller
             $noteLabel = $note->getNoteLabel();
 
             if($category instanceof Category && $noteLabel instanceof NoteLabel){
-                // TODO not create label if category wasn't selected
                 $sector = $category->getSector();
                 $angle = $sector->getBeginAngle() + ($sector->getEndAngle()-$sector->getBeginAngle())/2;
                 $noteLabel->setNote($note)
