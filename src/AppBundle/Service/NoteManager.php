@@ -7,6 +7,11 @@
  */
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Circle;
+use AppBundle\Entity\Note;
+use AppBundle\Entity\Sector;
+use AppBundle\Entity\User;
+use AppBundle\Model\ListNotesModel;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -36,6 +41,21 @@ class NoteManager
     {
         $this->em = $em;
         $this->container = $container;
+    }
+
+    public function updateListNotesModelByUser(ListNotesModel $listNotesModel, User $user)
+    {
+        $circles = $this->em->getRepository(Circle::class)->findBy(['user' => $user]);
+        $incomingNotes = $this->em->getRepository(Note::class)->findBy(['user' => $user, 'category' => null]);
+
+
+
+        $listNotesModel
+            ->setCircles($circles)
+            ->setIncomingNotes($incomingNotes)
+        ;
+
+        return true;
     }
 
 }

@@ -9,6 +9,7 @@ use AppBundle\Entity\NoteLabel;
 use AppBundle\Entity\Sector;
 use AppBundle\Entity\User;
 use AppBundle\Form\NoteType;
+use AppBundle\Model\ListNotesModel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -36,15 +37,10 @@ class NoteController extends Controller
      */
     public function listAction()
     {
-        $user = $this->getUser();
+        $listNotesModel = new ListNotesModel();
+        $this->get('app.note_note_manager')->updateListNotesModelByUser($listNotesModel,$this->getUser());
 
-        if($user instanceof User){
-            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user' => $user]);
-        }else{
-            throw new AccessDeniedHttpException();
-        }
-
-        return ['circles' => $circles, 'selectCircle' => null, 'selectCategory' => null, 'selectNote' => null];
+        return ['listNotesModel' => $listNotesModel];
     }
 
 
@@ -57,36 +53,11 @@ class NoteController extends Controller
      */
     public function listByNoteAction(Note $note)
     {
-        $user = $this->getUser();
+        $listNotesModel = new ListNotesModel();
+        $listNotesModel->setSelectNote($note);
+        $this->get('app.note_note_manager')->updateListNotesModelByUser($listNotesModel,$this->getUser());
 
-        if($user instanceof User){
-            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user' => $user]);
-        }else{
-            throw new AccessDeniedHttpException();
-        }
-
-        // TODO check, that note has noteLabel
-        return $this->render('@App/Note/list.html.twig',['circles' => $circles, 'selectCircle' => $note->getCategory()->getSector()->getCircle(), 'selectCategory' => $note->getCategory(),'selectNote' => $note]);
-    }
-
-    /**
-     * List of incoming notes
-     * @Route("/incoming/", name="notes_manager.note.incoming_list")
-     * @Method("GET")
-     * @return array
-     * @Template()
-     */
-    public function listIncomingNotesAction()
-    {
-        $user = $this->getUser();
-
-        if($user instanceof User){
-            $notes = $this->getDoctrine()->getRepository(Note::class)->findBy(['user'=>$user, 'category' => null]);
-        }else{
-            throw new AccessDeniedHttpException();
-        }
-
-        return ['notes' => $notes];
+        return $this->render('@App/Note/list.html.twig',['listNotesModel' => $listNotesModel]);
     }
 
     /**

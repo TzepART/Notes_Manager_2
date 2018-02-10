@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{# @var listNotesModel \AppBundle\Model\ListNotesModel #}
+{% set selectCircle = listNotesModel.selectCircle %}
+{% set selectCategory = listNotesModel.selectCategory %}
+{% set selectNote = listNotesModel.selectNote %}
+{% set circles = listNotesModel.circles %}
+{% set incommingNotes = listNotesModel.incomingNotes %}
+
+
  {% block main %}
      <div class="row">
          <div class="col-md-4">
