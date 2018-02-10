@@ -12,3 +12,7 @@ services:
         arguments: [@app.note_color_manager]
         tags:
             - { name: twig.extension }
+
+    app.note_note_manager:
+        class: AppBundle\Service\NoteManager
+        arguments: [@service_container, '@doctrine.orm.entity_manager']

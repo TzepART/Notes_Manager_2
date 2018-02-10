@@ -14,7 +14,8 @@ use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
  */
 class Circle
 {
-    use Timestampable;
+    use Timestampable,
+        Select;
 
     /**
      * @var int
