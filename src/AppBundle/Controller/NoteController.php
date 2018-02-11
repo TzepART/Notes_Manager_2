@@ -3,11 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\Circle;
 use AppBundle\Entity\Note;
 use AppBundle\Entity\NoteLabel;
 use AppBundle\Entity\Sector;
-use AppBundle\Entity\User;
 use AppBundle\Form\NoteType;
 use AppBundle\Model\ListNotesModel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,7 +17,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * NoteController
@@ -38,7 +35,7 @@ class NoteController extends Controller
     public function listAction()
     {
         $listNotesModel = new ListNotesModel();
-        $this->get('app.note_note_manager')->updateListNotesModelByUser($listNotesModel,$this->getUser());
+        $this->get('app.note_notes_manager')->updateListNotesModelByUser($listNotesModel,$this->getUser());
 
         return ['listNotesModel' => $listNotesModel];
     }
@@ -55,7 +52,7 @@ class NoteController extends Controller
     {
         $listNotesModel = new ListNotesModel();
         $listNotesModel->setSelectNote($note);
-        $this->get('app.note_note_manager')->updateListNotesModelByUser($listNotesModel,$this->getUser());
+        $this->get('app.note_notes_manager')->updateListNotesModelByUser($listNotesModel,$this->getUser());
 
         return $this->render('@App/Note/list.html.twig',['listNotesModel' => $listNotesModel]);
     }

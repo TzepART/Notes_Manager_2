@@ -5,72 +5,93 @@
 {% set selectCategory = listNotesModel.selectCategory %}
 {% set selectNote = listNotesModel.selectNote %}
 {% set circles = listNotesModel.circles %}
-{% set incommingNotes = listNotesModel.incomingNotes %}
+{% set incomingNotes = listNotesModel.incomingNotes %}
 
 
- {% block main %}
+{% block main %}
      <div class="row">
          <div class="col-md-4">
              <div class="panel panel-default">
                  {#@var circle \AppBundle\Entity\Circle#}
                  {#@var selectCircle \AppBundle\Entity\Circle#}
                  {% for circle in circles %}
-                 {% if selectCircle is null %}
-                     {% set selectCircle = circle %}
-                 {% endif %}
-                 <div class="panel-heading" id="heading{{ circle.id }}" role="tab">
-                     <h4 class="panel-title">
-                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ circle.id }}" aria-controls="collapse{{ circle.id }}" class="collapsed" aria-expanded="false">{{ circle.name }}</a>
-                     </h4>
-                 </div>
-                 <div class="panel-collapse collapse {{ circle.id == selectCircle.id ? 'in' : '' }}" id="collapse{{ circle.id }}" role="tabpanel" aria-labelledby="heading{{ circle.id }}">
-                     <div class="list-group">
-                         <ul class="list-group">
-                             {% for sector in circle.sectors %}
-                                 {# @var category \AppBundle\Entity\Category #}
-                                 {# @var selectCategory \AppBundle\Entity\Category #}
-                                 {% set category = sector.category %}
-                                 {% if selectCategory is null %}
-                                     {% set selectCategory = category %}
-                                 {% endif %}
-                                 <li class="list-group-item notes_link_by_list" style="background: gray;">
-                                     <a href="#collapseCategory{{ category.id }}" data-toggle="collapse" aria-expanded="false" aria-controls="collapseCategory{{ category.id }}">{{ category.name }}</a>
-                                     <a href="{{ path('notes_manager.circle.view', {id: circle.id}) }}"><i class="fa fa-adjust fa-lg"></i></a>
+                     {% if selectCircle is null and listNotesModel.selectedIncomingCategory == false %}
+                         {% set selectCircle = circle %}
+                     {% endif %}
+                     <div class="panel-heading" id="heading{{ circle.id }}" role="tab">
+                         <h4 class="panel-title">
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ circle.id }}" aria-controls="collapse{{ circle.id }}" class="collapsed" aria-expanded="false">{{ circle.name }}</a>
+                         </h4>
+                     </div>
+                     <div class="panel-collapse collapse {{ selectCircle.id is defined and circle.id == selectCircle.id ? 'in' : '' }}" id="collapse{{ circle.id }}" role="tabpanel" aria-labelledby="heading{{ circle.id }}">
+                         <div class="list-group">
+                             <ul class="list-group">
+                                 {% for sector in circle.sectors %}
+                                      {#@var category \AppBundle\Entity\Category#}
+                                      {#@var selectCategory \AppBundle\Entity\Category#}
+                                     {% set category = sector.category %}
+                                     {% if selectCategory is null and listNotesModel.selectedIncomingCategory == false %}
+                                         {% set selectCategory = category %}
+                                     {% endif %}
+                                     <li class="list-group-item notes_link_by_list" style="background: gray;">
+                                         <a href="#collapseCategory{{ category.id }}" data-toggle="collapse" aria-expanded="false" aria-controls="collapseCategory{{ category.id }}">{{ category.name }}</a>
+                                         <a href="{{ path('notes_manager.circle.view', {id: circle.id}) }}"><i class="fa fa-adjust fa-lg"></i></a>
 
-                                     <div class="collapse collapse_note {{ category.id == selectCategory.id ? 'in' : '' }}" id="collapseCategory{{ category.id }}">
-                                         <div class="well_notes">
-                                             <ul class="list-group">
-                                                 {# @var note \AppBundle\Entity\Note #}
-                                                 {# @var selectNote \AppBundle\Entity\Note #}
-                                                 {# @var noteLabel \AppBundle\Entity\NoteLabel #}
-                                                 {% for noteLabel in sector.noteLabels %}
-                                                     {% set note = noteLabel.note %}
-                                                     {% if  selectNote is null %}
-                                                         {% set selectNote = note %}
-                                                     {% endif %}
-                                                     <li class="list-group-item notes_link_by_list" style="background: {{ getLabelColor(noteLabel) }};">
-                                                         <a href="#collapseNote{{ note.id }}" aria-expanded="false" onclick="getNoteContent({{ note.id }})" aria-controls="collapseNote{{ note.id }}">{{ note.title }}</a>
-                                                         <a href="{{ path('notes_manager.circle.view', {id: circle.id}) }}"><i class="fa fa-adjust fa-lg"></i></a>
-                                                         <a href="{{ path('notes_manager.note.view', {id: note.id}) }}"><i class="fa fa-pencil fa-lg"></i></a>
-                                                         <div class="collapse collapse_note" id="collapseNote{{ note.id }}"></div>
-                                                     </li>
-                                                 {% endfor %}
-                                             </ul>
+                                         <div class="collapse collapse_note {{ selectCategory.id is defined and category.id == selectCategory.id ? 'in' : '' }}" id="collapseCategory{{ category.id }}">
+                                             <div class="well_notes">
+                                                 <ul class="list-group">
+                                                      {#@var note \AppBundle\Entity\Note#}
+                                                      {#@var selectNote \AppBundle\Entity\Note#}
+                                                      {#@var noteLabel \AppBundle\Entity\NoteLabel#}
+                                                     {% for noteLabel in sector.noteLabels %}
+                                                         {% set note = noteLabel.note %}
+                                                         {% if  selectNote is null and listNotesModel.selectedIncomingCategory == false %}
+                                                             {% set selectNote = note %}
+                                                         {% endif %}
+                                                         <li class="list-group-item notes_link_by_list" style="background: {{ getLabelColor(noteLabel) }};">
+                                                             <a href="#collapseNote{{ note.id }}" aria-expanded="false" onclick="getNoteContent({{ note.id }})" aria-controls="collapseNote{{ note.id }}">{{ note.title }}</a>
+                                                             <a href="{{ path('notes_manager.circle.view', {id: circle.id}) }}"><i class="fa fa-adjust fa-lg"></i></a>
+                                                             <a href="{{ path('notes_manager.note.view', {id: note.id}) }}"><i class="fa fa-pencil fa-lg"></i></a>
+                                                             <div class="collapse collapse_note" id="collapseNote{{ note.id }}"></div>
+                                                         </li>
+                                                     {% endfor %}
+                                                 </ul>
+                                             </div>
                                          </div>
-                                     </div>
 
+                                     </li>
+                                 {% endfor %}
+                             </ul>
+                         </div>
+                     </div>
+                 {% endfor %}
+                 {% if incomingNotes is not empty %}
+                     <div class="panel-heading" id="headingIncomingNotes" role="tab">
+                         <h4 class="panel-title">
+                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseIncomingNotes" aria-controls="collapseIncomingNotes" class="collapsed" aria-expanded="false">Без категории</a>
+                         </h4>
+                     </div>
+                     <div class="collapse collapse_note {{ listNotesModel.selectedIncomingCategory ? 'in' : '' }}" id="collapseIncomingNotes">
+                         <div class="well_notes">
+                             <ul class="list-group">
+                              {# @var incomingNote \AppBundle\Entity\Note#}
+                             {% for incomingNote in incomingNotes %}
+                                 <li class="list-group-item notes_link_by_list" style="background-color: gray;">
+                                     <a href="#collapseNote{{ incomingNote.id }}" aria-expanded="false" onclick="getNoteContent({{ incomingNote.id }})" aria-controls="collapseNote{{ incomingNote.id }}">{{ incomingNote.title }}</a>
+                                     <a href="{{ path('notes_manager.note.view', {id: incomingNote.id}) }}"><i class="fa fa-pencil fa-lg"></i></a>
+                                     <div class="collapse collapse_note" id="collapseNote{{ incomingNote.id }}"></div>
                                  </li>
                              {% endfor %}
-                         </ul>
+                             </ul>
+                         </div>
                      </div>
-                 </div>
-                 {% endfor %}
+                 {% endif %}
              </div>
          </div>
          <div class="jumbotron col-md-8">
              <div class="row">
                  <div class="col-md-8">
-                     {# @var selectNote \AppBundle\Entity\Note#}
+                      {# @var selectNote \AppBundle\Entity\Note#}
                      {% if selectNote is not null %}
                          <div class="note_view_title" id="note_view_title">{{ selectNote.title }}</div>
                          <div class="note_view_text" id="note_view_text">{{ selectNote.text }}</div>
@@ -86,4 +107,4 @@
              </div>
          </div>
      </div>
- {% endblock %}
+{% endblock %}

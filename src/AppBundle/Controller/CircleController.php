@@ -57,7 +57,7 @@ class CircleController extends Controller
     {
         $listNotesModel = new ListNotesModel();
         $listNotesModel->setSelectCircle($circle);
-        $this->get('app.note_note_manager')->updateListNotesModelByUser($listNotesModel,$this->getUser());
+        $this->get('app.note_notes_manager')->updateListNotesModelByUser($listNotesModel,$this->getUser());
 
         return $this->render('@App/Note/list.html.twig',['listNotesModel' => $listNotesModel]);
     }
