@@ -7,6 +7,7 @@ use AppBundle\Entity\Circle;
 use AppBundle\Entity\Sector;
 use AppBundle\Entity\User;
 use AppBundle\Form\CircleType;
+use AppBundle\Model\ListNotesModel;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -54,18 +55,11 @@ class CircleController extends Controller
      */
     public function listByCircleAction(Circle $circle)
     {
-        $user = $this->getUser();
+        $listNotesModel = new ListNotesModel();
+        $listNotesModel->setSelectCircle($circle);
+        $this->get('app.note_notes_manager')->updateListNotesModelByUser($listNotesModel,$this->getUser());
 
-        if($user instanceof User){
-            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user' => $user]);
-        }else{
-            throw new AccessDeniedHttpException();
-        }
-        /** @var Sector $sector */
-        $sector = $circle->getSectors()->first();
-        // TODO check exist notes and categories
-
-        return $this->render('@App/Note/list.html.twig',['circles' => $circles,'selectCircle' => $circle, 'selectCategory' => $sector, 'selectNote' => $sector->getCategory()->getNotes()->first()]);
+        return $this->render('@App/Note/list.html.twig',['listNotesModel' => $listNotesModel]);
     }
 
 

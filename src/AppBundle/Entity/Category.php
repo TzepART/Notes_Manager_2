@@ -14,7 +14,8 @@ use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
  */
 class Category
 {
-    use Timestampable;
+    use Timestampable,
+        Select;
 
     /**
      * @var int

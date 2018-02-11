@@ -3,10 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
-use AppBundle\Entity\Circle;
 use AppBundle\Entity\Sector;
-use AppBundle\Entity\User;
 use AppBundle\Form\CategoryType;
+use AppBundle\Model\ListNotesModel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +15,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * CategoryController
@@ -34,15 +32,11 @@ class CategoryController extends Controller
      */
     public function listByCategoryAction(Category $category)
     {
-        $user = $this->getUser();
+        $listNotesModel = new ListNotesModel();
+        $listNotesModel->setSelectCategory($category);
+        $this->get('app.note_notes_manager')->updateListNotesModelByUser($listNotesModel,$this->getUser());
 
-        if($user instanceof User){
-            $circles = $this->getDoctrine()->getRepository(Circle::class)->findBy(['user' => $user]);
-        }else{
-            throw new AccessDeniedHttpException();
-        }
-
-        return $this->render('@App/Note/list.html.twig',['circles' => $circles,'selectCircle' => $category->getSector()->getCircle(), 'selectCategory' => $category, 'selectNote' => $category->getNotes()->last()]);
+        return $this->render('@App/Note/list.html.twig',['listNotesModel' => $listNotesModel]);
     }
 
     /**

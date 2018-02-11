@@ -13,7 +13,8 @@ use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
  */
 class Note
 {
-    use Timestampable;
+    use Timestampable,
+        Select;
 
     /**
      * @var int
