@@ -53,3 +53,7 @@ body{
 .detail_circle_group_buttons a{
     width: 100%;
 }
+
+.masthead h3{
+    margin-bottom: 20px;
+}
