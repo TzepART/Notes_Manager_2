@@ -58,6 +58,10 @@ body{
     margin-bottom: 20px;
 }
 
-body > .container > .row{
+body > .container > .row, body > .container > .jumbotron{
     min-height: 100vh;
+}
+
+#main_logo_link{
+    text-decoration: none;
 }
