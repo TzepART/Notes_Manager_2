@@ -69,7 +69,7 @@ class NoteController extends Controller
     {
         $noteForm = $this->getNoteForm($note);
 
-        return ['form' => $noteForm->createView()];
+        return ['form' => $noteForm->createView(), 'note' => $note];
     }
 
     /**
