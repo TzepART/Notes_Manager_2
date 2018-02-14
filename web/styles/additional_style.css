@@ -1,2 +1,63 @@
-canvas{border:10px solid gray}body{background-color:#31708f}.header.clearfix{margin-bottom:20px}.note_view_title{margin-bottom:10px;font-size:20px}.note_view_text{border:2px solid #000;background:#fff;padding:10px}.nav-justified{background-color:#fff}.masthead h3{color:#fff}
-/*# sourceMappingURL=additional_style.css.map */
+canvas {
+    border: 10px solid gray;
+}
+
+body{
+    background-color: #191e29;
+}
+
+.header.clearfix{
+    margin-bottom: 20px;
+}
+
+.note_view_title{
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.note_view_text{
+    border: 0 solid black;
+    background: white;
+    padding: 10px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.nav-justified{
+    background-color: white;
+}
+
+.masthead h3{
+    color: white;
+}
+
+.register_title{
+    color: white;
+}
+
+.footer p{
+    color: white;
+}
+
+.head_menu a{
+    color: #191e29;
+    font-size: 18px;
+    font-family: "Arial";
+}
+
+.notes_list__note_area{
+    margin-right: 0px;
+}
+
+.detail_circle_group_buttons a{
+    width: 100%;
+}
+
+.masthead h3{
+    margin-bottom: 20px;
+}
+
+body > .container > .row{
+    min-height: 100vh;
+}

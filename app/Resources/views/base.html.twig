@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <div class="masthead"><h3>Notes Manager  <span class="label label-default">Beta</span></h3>
-        <ul class="nav nav-justified">
+        <ul class="nav nav-justified head_menu navbar-default">
             <li role="presentation"><a href="{{ path('notes_manager.circle.list') }}">Список окружностей</a></li>
             <li role="presentation"><a href="{{ path('notes_manager.note.list') }}">Заметки</a></li>
             <li role="presentation"><a href="{{ path('notes_manager.circle.create') }}">Добавить окружность</a></li>
@@ -32,7 +32,7 @@
     {% block main %}
 
     {% endblock %}
-    <footer class="footer"><p>&copy; 2016 TzepArt Company, Inc.</p></footer>
+    <footer class="footer"><p>&copy; 2018 TzepArt Company, Inc.</p></footer>
     {% block javascripts %}
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="{{ asset('scripts/main.min.js') }}"></script>

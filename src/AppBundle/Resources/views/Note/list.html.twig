@@ -88,20 +88,24 @@
                  {% endif %}
              </div>
          </div>
-         <div class="jumbotron col-md-8">
-             <div class="row">
-                 <div class="col-md-8">
-                      {# @var selectNote \AppBundle\Entity\Note#}
-                     {% if selectNote is not null %}
-                         <div class="note_view_title" id="note_view_title">{{ selectNote.title }}</div>
-                         <div class="note_view_text" id="note_view_text">{{ selectNote.text }}</div>
-                     {% endif %}
-                 </div>
-                 <div class="col-md-3 col-md-offset-1">
-                     <div class="form-group form_submit">
+         <div class="col-md-8">
+             <div class="row jumbotron notes_list__note_area">
+                 <div class="row">
+                     <div class="col-md-12">
+                          {# @var selectNote \AppBundle\Entity\Note#}
                          {% if selectNote is not null %}
-                            <a id="note_edit_link" class="btn btn-primary register_button" href="{{ path('notes_manager.note.view',{id: selectNote.id}) }}">Редактировать</a>
+                             <div class="note_view_title" id="note_view_title">{{ selectNote.title }}</div>
+                             <div class="note_view_text" id="note_view_text">{{ selectNote.text }}</div>
                          {% endif %}
+                     </div>
+                 </div>
+                 <div class="row">
+                     <div class="col-md-3">
+                         <div class="form-group form_submit">
+                             {% if selectNote is not null %}
+                                <a id="note_edit_link" class="btn btn-primary register_button" href="{{ path('notes_manager.note.view',{id: selectNote.id}) }}">Редактировать</a>
+                             {% endif %}
+                         </div>
                      </div>
                  </div>
              </div>
