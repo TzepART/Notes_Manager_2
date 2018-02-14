@@ -63,17 +63,18 @@ block content
                             +li-note('rgb(199, 125, 95)','Category5')
                             +li-note('rgb(171, 188, 143)','Category6')
 
-        .jumbotron.col-md-8
-            .row
-                .col-md-8
-                    div.note_view_title#note_view_title
-                        | Lorem ipsum do...
-                    div.note_view_text#note_view_text
-                        | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque delectus
-                        | doloribus eius, exercitationem impedit itaque provident sapiente sit tempora
-                        | temporibus?
-                .col-md-3.col-md-offset-1
-                    .form-group.form_submit
+        .col-md-8
+            .row.jumbotron.notes_list__note_area
+                .row
+                    .col-md-12
+                        div.note_view_title#note_view_title
+                            | Lorem ipsum do...
+                        div.note_view_text#note_view_text
+                            | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque delectus
+                            | doloribus eius, exercitationem impedit itaque provident sapiente sit tempora
+                            | temporibus?
+                .row
+                    .col-md-3
                         a.btn.btn-primary#note_edit_link(href="notes_edit.html") Редактировать
 
 

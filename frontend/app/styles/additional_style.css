@@ -3,7 +3,7 @@ canvas {
 }
 
 body{
-    background-color: #31708f;
+    background-color: #191e29;
 }
 
 .header.clearfix{
@@ -16,9 +16,12 @@ body{
 }
 
 .note_view_text{
-    border: 2px solid black;
+    border: 0 solid black;
     background: white;
     padding: 10px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
 }
 
 .nav-justified{
@@ -27,4 +30,26 @@ body{
 
 .masthead h3{
     color: white;
+}
+
+.register_title{
+    color: white;
+}
+
+.footer p{
+    color: white;
+}
+
+.head_menu a{
+    color: #191e29;
+    font-size: 18px;
+    font-family: "Arial";
+}
+
+.notes_list__note_area{
+    margin-right: 0px;
+}
+
+.detail_circle_group_buttons a{
+    width: 100%;
 }

@@ -6,10 +6,6 @@ body {
     margin-bottom: 20px;
 }
 
-.detail_circle_group_buttons{
-    width: 630px;
-}
-
 .circle_list_title, .login_title, .register_title {
     margin-top: 0;
     text-align: center
