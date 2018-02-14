@@ -49,3 +49,7 @@ body{
 .notes_list__note_area{
     margin-right: 0px;
 }
+
+.detail_circle_group_buttons a{
+    width: 100%;
+}
