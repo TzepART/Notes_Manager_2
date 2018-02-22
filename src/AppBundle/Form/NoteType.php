@@ -8,6 +8,7 @@ use AppBundle\Entity\User;
 use AppBundle\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -84,11 +85,15 @@ class NoteType extends AbstractType
                     return $repo->queryCategoriesByUser($this->getUser());
                 }
             ])
-            ->add('noteLabel', NoteLabelType::class, [
-                    'required' => false,
-                    'label' => false,
-                ]
-            )
+            ->add('importance', RangeType::class,[
+                'attr' => array(
+                    'min' => 0,
+                    'max' => 1,
+                    'step' => 0.01,
+                    'class' => 'form-control range blue'
+                ),
+                'label' => 'Важность'
+            ]);
         ;
     }
     
