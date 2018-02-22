@@ -163,6 +163,7 @@ class NoteController extends Controller
 
             /** @var NoteLabel $noteLabel */
             $noteLabel = $note->getNoteLabel();
+            // TODO here need refactoring
             if (($category instanceof Category) && ($noteLabel instanceof NoteLabel)) {
                 $sector = $category->getSector();
                 // if noteLabel is new or noteLabel has new Sector - change sector
