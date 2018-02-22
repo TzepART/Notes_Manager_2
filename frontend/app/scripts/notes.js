@@ -14,18 +14,18 @@ function getNoteContent(noteId) {
   });
 }
 
-jQuery(document).ready(function() {
-  setDisabledToRange();
-  $("#note_category").change(function() {
-    setDisabledToRange();
-  });
-});
-
-function setDisabledToRange() {
-  var selsectCategory = $('#note_category').val();
-  if(selsectCategory === ""){
-    $('#note_noteLabel_radius').attr("disabled",true);
-  }else{
-    $('#note_noteLabel_radius').attr("disabled",false);
-  }
-}
+// jQuery(document).ready(function() {
+//   setDisabledToRange();
+//   $("#note_category").change(function() {
+//     setDisabledToRange();
+//   });
+// });
+//
+// function setDisabledToRange() {
+//   var selsectCategory = $('#note_category').val();
+//   if(selsectCategory === ""){
+//     $('#note_noteLabel_radius').attr("disabled",true);
+//   }else{
+//     $('#note_noteLabel_radius').attr("disabled",false);
+//   }
+// }
