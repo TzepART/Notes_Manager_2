@@ -181,7 +181,9 @@ class NoteController extends Controller
                 }
             } else {
                 $note->setNoteLabelNull();
-                $em->remove($noteLabel);
+                if($noteLabel instanceof NoteLabel){
+                    $em->remove($noteLabel);
+                }
             }
 
             $em->persist($note);
