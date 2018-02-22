@@ -52,9 +52,11 @@ class LoadNotesData extends Fixture implements OrderedFixtureInterface, Containe
         for ($i = 0; $i < self::COUNT_NOTES; $i++) {
             $note = new Note();
             $userNumber = $i%5;
+            $importance = mt_rand(0, mt_getrandmax() - 1) / mt_getrandmax();
 
             $note->setTitle($this->faker->realText(20))
                 ->setText($this->faker->realText(200))
+                ->setImportance($importance)
                 ->setUser($this->getReference(LoadUsersData::REFERENCE_PREFIX . $userNumber));
 
             $manager->persist($note);

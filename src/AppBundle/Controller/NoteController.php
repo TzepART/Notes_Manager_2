@@ -111,15 +111,16 @@ class NoteController extends Controller
             /** @var Category $category */
             $category = $note->getCategory();
 
-            /** @var NoteLabel $noteLabel */
-            $noteLabel = $note->getNoteLabel();
-
-            if($category instanceof Category && $noteLabel instanceof NoteLabel){
+            if($category instanceof Category && $note->getImportance() > 0){
+                /** @var NoteLabel $noteLabel */
+                $noteLabel = new NoteLabel();
                 $sector = $category->getSector();
                 $angle = $sector->getBeginAngle() + ($sector->getEndAngle()-$sector->getBeginAngle())/2;
                 $noteLabel->setNote($note)
+                    ->setRadius($note->getImportance())
                     ->setSector($sector)
                     ->setAngle($angle);
+                $note->setNoteLabel($noteLabel);
                 $em->persist($noteLabel);
             }else{
                 $note->setNoteLabelNull();
@@ -162,19 +163,27 @@ class NoteController extends Controller
 
             /** @var NoteLabel $noteLabel */
             $noteLabel = $note->getNoteLabel();
+            // TODO here need refactoring
             if (($category instanceof Category) && ($noteLabel instanceof NoteLabel)) {
                 $sector = $category->getSector();
-//              // if noteLabel is new or noteLabel has new Sector - change sector
+                // if noteLabel is new or noteLabel has new Sector - change sector
                 if (!($noteLabel->getSector() instanceof Sector) || $sector->getId() != $noteLabel->getSector()->getId()) {
                     $angle = $sector->getBeginAngle() + ($sector->getEndAngle() - $sector->getBeginAngle()) / 2;
                     $noteLabel->setNote($note)
+                        ->setRadius($note->getImportance())
                         ->setSector($sector)
                         ->setAngle($angle);
                     $em->persist($noteLabel);
                 }
+
+                if($note->getImportance() != $noteLabel->getRadius()){
+                    $noteLabel->setRadius($note->getImportance());
+                }
             } else {
                 $note->setNoteLabelNull();
-                $em->remove($noteLabel);
+                if($noteLabel instanceof NoteLabel){
+                    $em->remove($noteLabel);
+                }
             }
 
             $em->persist($note);

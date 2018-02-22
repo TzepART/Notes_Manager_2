@@ -74,11 +74,10 @@ class LoadNoteLabelsData extends Fixture implements OrderedFixtureInterface, Con
             $randSector = $sectors->get(array_rand($sectors->toArray()));
 
             $angle = rand((int) $randSector->getBeginAngle(),(int) $randSector->getEndAngle());
-            $radius = mt_rand(0, mt_getrandmax() - 1) / mt_getrandmax();
 
             $noteLabel->setNote($note)
                 ->setSector($randSector)
-                ->setRadius($radius)
+                ->setRadius($note->getImportance())
                 ->setAngle($angle);
 
             $note->setNoteLabel($noteLabel)

@@ -45,6 +45,14 @@ class Note
      */
     private $user;
 
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="importance", type="float")
+     */
+    private $importance;
+
     /**
      * @var Category|null
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="notes")
@@ -171,6 +179,25 @@ class Note
         $this->noteLabel = $noteLabel;
         return $this;
     }
+
+    /**
+     * @return float
+     */
+    public function getImportance()
+    {
+        return $this->importance;
+    }
+
+    /**
+     * @param float $importance
+     * @return $this
+     */
+    public function setImportance($importance)
+    {
+        $this->importance = $importance;
+        return $this;
+    }
+
 
     public function setNoteLabelNull()
     {

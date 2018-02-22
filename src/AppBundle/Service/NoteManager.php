@@ -52,7 +52,7 @@ class NoteManager
     public function updateListNotesModelByUser(ListNotesModel $listNotesModel, User $user)
     {
         $circles = $this->em->getRepository(Circle::class)->findBy(['user' => $user]);
-        $incomingNotes = $this->em->getRepository(Note::class)->findBy(['user' => $user, 'category' => null]);
+        $incomingNotes = $this->em->getRepository(Note::class)->findBy(['user' => $user, 'category' => null],['importance' => 'ASC']);
 
         if (!$listNotesModel->isSelectedIncomingCategory()) {
             if ($listNotesModel->getSelectNote() instanceof Note) {
