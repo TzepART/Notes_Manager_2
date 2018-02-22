@@ -174,6 +174,10 @@ class NoteController extends Controller
                         ->setAngle($angle);
                     $em->persist($noteLabel);
                 }
+
+                if($note->getImportance() != $noteLabel->getRadius()){
+                    $noteLabel->setRadius($note->getImportance());
+                }
             } else {
                 $note->setNoteLabelNull();
                 $em->remove($noteLabel);
