@@ -1,6 +1,8 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+#    options:
+#        sitemap: true
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
@@ -15,3 +17,6 @@ fos_user_registration_confirmed:
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
+
+presta_sitemap:
+    resource: "@PrestaSitemapBundle/Resources/config/routing.yml"

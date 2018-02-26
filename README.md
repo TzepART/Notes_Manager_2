@@ -16,11 +16,13 @@ It comes with the following bundles:
   
   * [**DoctrineFixturesBundle**][19] (in dev env) - For using fixtures in testing  
   
-  * [**DoctrineBehaviorsBundle**][21] add behaviors to Doctrine2 entities and repositories  
+  * [**DoctrineBehaviorsBundle**][21] add behaviors to Doctrine2 entities and repositories    
   
   * [**Faker**][22] library for generate fiction data
   
   * [**PhpUnit_Library**][23] phpunit - library for testing
+  
+  * [**PrestaSitemapBundle**][24] Dynamic generate sitemap  
  
 It comes standard pre-configured with the following bundles:
   
@@ -76,3 +78,4 @@ It comes standard pre-configured with the following bundles:
 [21]: https://github.com/KnpLabs/DoctrineBehaviors
 [22]: https://github.com/fzaninotto/Faker
 [23]: https://packagist.org/packages/phpunit/phpunit
+[24]: https://github.com/prestaconcept/PrestaSitemapBundle
