@@ -88,3 +88,9 @@ doctrine_migrations:
     organize_migrations: false # Version >=1.2 Possible values are: "BY_YEAR", "BY_YEAR_AND_MONTH", false
 
 nelmio_api_doc: ~
+
+presta_sitemap:
+    defaults:
+        priority: 1
+        changefreq: daily
+        lastmod: now
