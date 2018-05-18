@@ -45,7 +45,7 @@ class LoadCirclesData extends Fixture implements OrderedFixtureInterface, Contai
      */
     public function load(ObjectManager $manager)
     {
-        $this->faker = FakerFactory::create('ru_RU');
+        $this->faker = FakerFactory::create('en_EN');
 
         foreach (self::getCirclesDate() as $name => $circleData) {
             $circle = new Circle();

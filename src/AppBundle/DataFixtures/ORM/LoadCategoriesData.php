@@ -35,7 +35,7 @@ class LoadCategoriesData extends Fixture implements OrderedFixtureInterface, Con
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->faker = FakerFactory::create('ru_RU');
+        $this->faker = FakerFactory::create('en_EN');
     }
 
     /**

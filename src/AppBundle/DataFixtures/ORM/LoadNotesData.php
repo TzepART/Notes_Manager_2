@@ -37,7 +37,7 @@ class LoadNotesData extends Fixture implements OrderedFixtureInterface, Containe
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->faker = FakerFactory::create('ru_RU');
+        $this->faker = FakerFactory::create('en_EN');
 
     }
 
