@@ -1,0 +1,38 @@
+version: '2'
+services:
+    db:
+        image: mysql:5.7
+        ports:
+            - "3308:3306"
+        environment:
+            MYSQL_DATABASE: the_project_db
+            MYSQL_USER: the_project_db_user
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_PASSWORD: root
+    php:
+        build: ./docker/php-fpm
+        ports:
+            - "9000:9000"
+        volumes:
+            - ./:/var/www/symfony:cached
+            - ./logs/symfony:/var/www/symfony/var/logs:cached
+        links:
+            - db
+    nginx:
+        build: ./docker/nginx
+        ports:
+            - "80:80"
+        links:
+            - php
+        volumes_from:
+            - php
+        volumes:
+            - ./logs/nginx/:/var/log/nginx:cached
+    node:
+        build: ./docker/node
+        ports:
+            - "8080:8080"
+        links:
+            - nginx
+        volumes_from:
+            - php

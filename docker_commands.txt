@@ -1,0 +1,8 @@
+docker ps -a
+docker exec -ti 74cbad80b029  /bin/sh
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker rm $(docker ps -a -q -f status=exited)
+docker-compose up
+
+docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker rmi toyota_brand_hub_node
